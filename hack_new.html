@@ -1,0 +1,239 @@
+<html>
+  <head>
+    <title>HACK</title>
+    
+    <style type="text/css">
+      body 
+      {
+          background-color: #001100;
+          font-family: "consolas";
+          color: #00EE00;
+          font-size: 15px;
+          /*font-size: 1.25vh;*/
+      }
+      input 
+      {
+          background-color: #001100;
+          width: 50%;
+          border: none;
+          padding: 0px;
+          outline: none;
+          font-family: "consolas";
+          color: #00EE00;
+          font-size: 15px;
+          /*font-size: 1.25vh;*/
+      }
+      #prompt
+      {
+          background-color: #001100;
+          width: 50%;
+          border: none;
+          padding: 0px;
+          outline: none;
+          font-family: "consolas";
+          color: #00EE00;
+          font-size: 15px;
+      }
+      #console
+      {
+          background-color: #001100;
+          width: 50%;
+          border: none;
+          padding: 0px;
+          outline: none;
+          font-family: "consolas";
+          color: #00EE00;
+          font-size: 15px;
+      }
+
+    </style>
+
+    <script language="javascript" type="text/javascript">
+    var Username = "root";
+    var Passwd = "welkom";
+
+    // commands
+    var commando1 = "com1";
+    var commando2 = "com2";
+    var commando3 = "com3";
+    var commando4 = "com4";
+    var commando5 = "exit";
+
+    var current_folder = "/";
+    var folder1 = "cd /";
+    var folder2 = "cd /home";
+
+    var state_user = 0;
+    var state_password = 1;
+    var state_command = 2;
+
+    var current_state = state_user;
+
+    window.onload = function()
+    {
+      showhide('pw', 'none');
+      showhide('prompt', 'none');
+      getfocus("username");
+    }
+
+    function submit(id, event)
+    {
+      key = event.keyCode | event.charCode;
+      if (key == 13)
+      { 
+        if(id == username)
+        {
+          validateUser();
+          id.value=''; 
+          return false; 
+        }
+        else if(id == password)
+        {
+          validatePassword();
+          id.value=''; 
+          return false; 
+        }
+        else if(id == command)
+        {
+          validateCommand();
+          id.value=''; 
+          return false; 
+        }
+      }
+    }
+
+    function getfocus()
+    {
+      if(current_state == state_user)
+      {
+        document.getElementById('username').focus();
+      }
+      else if(current_state == state_password)
+      {
+        document.getElementById('password').focus();
+      }
+      else if(current_state == state_command)
+      {
+        document.getElementById('command').focus();
+      }
+    }
+
+    function changeFolder(folder)
+    {
+      return current_folder;
+    }
+
+    function showhide(boxid, state)
+    {
+        //states: none , block
+        document.getElementById(boxid).style.display=state;
+    }
+
+    function changeState(cur_state)
+    {
+      current_state = cur_state+1;
+    }
+
+    function validateUser()
+    {
+      var previousInnerHTML = new String();
+      var userInput = document.getElementById("username").value;
+
+      previousInnerHTML = document.getElementById('user').innerHTML;
+
+      if(userInput == Username)
+      {
+        showhide('userinput', 'none');
+        showhide('pw', 'block');
+        changeState(state_user);
+        getfocus();
+      }
+      else
+      {
+        previousInnerHTML = previousInnerHTML.concat("login as: ", userInput, "<br>", userInput, ": invalid username<br>");
+      }
+      document.getElementById('user').innerHTML = previousInnerHTML;      
+    }
+
+    function validatePassword()
+    {
+      var previousInnerHTML = new String();
+      var pwInput = document.getElementById("password").value;
+
+      previousInnerHTML = document.getElementById('pass').innerHTML;
+    
+      if(pwInput == Passwd)
+      {
+        showhide('prompt', 'block');
+        changeState(state_password);
+        getfocus();
+      }
+      else
+      {
+        previousInnerHTML = previousInnerHTML.concat("root@hack's password:<br>Acces denied: invalid password<br>");
+      }
+      document.getElementById('pass').innerHTML = previousInnerHTML;
+    }
+
+    function validateCommand()
+    {  
+        var previousInnerHTML = new String();
+        var commandInput = document.getElementById("command").value;
+
+        previousInnerHTML = document.getElementById('console').innerHTML;
+        previousInnerHTML = previousInnerHTML.concat("<br>[root@hack-Server ",changeFolder(), "]# ", commandInput);
+
+        if(commandInput == commando1)
+        {
+          previousInnerHTML = previousInnerHTML.concat("<br>com1");  
+        }
+        else if(commandInput == commando2)
+        {
+          previousInnerHTML = previousInnerHTML.concat("<br>com2");   
+        }
+        else if(commandInput == folder1)
+        {
+          changeFolder(folder1);
+        }        
+        else if(commandInput == "")
+        {
+          previousInnerHTML = previousInnerHTML.concat("");  
+        }
+        else if(commandInput == commando5)
+        {
+
+        }
+        else
+        {
+          previousInnerHTML = previousInnerHTML.concat("<br>-bash: ",commandInput, ": command not found");
+        }        
+        document.getElementById('console').innerHTML = previousInnerHTML;
+    }
+    
+    </script>
+  </head>
+<body>
+  <div id="usr">
+    <div id="user">
+    </div>
+      <div id="userinput">
+        login as: <input id="username" type="text" onBlur="getfocus()" onkeydown="submit(username, arguments[0] || window.event)"/>
+      </div>
+    </div>
+  <div id="pw">
+    <div id="pass">
+      login as: root</br>
+    </div>
+    root@hack's password: <input id="password" type="password" onBlur="getfocus()" onkeydown="submit(password, arguments[0] || window.event)"/>
+  </div>
+  <div id="prompt">
+    <div id="console">
+      login succesful</br>
+      Last login: Fri Mar 13 10:12:20 2015 from 127.0.0.1
+    </div>
+      [root@hack-Server
+      <script language="javascript" type="text/javascript">document.write(changeFolder());</script>]# <input id="command" type="text" onBlur="getfocus()" onkeydown="submit(command, arguments[0] || window.event)"/>
+    </div>
+
+  </body>
+</html>
