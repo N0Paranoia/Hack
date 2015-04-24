@@ -201,9 +201,18 @@
         else
         {
           previousInnerHTML = previousInnerHTML.concat("<br>-bash: ",commandInput, ": command not found");
-        }        
+        }       
         document.getElementById('console').innerHTML = previousInnerHTML;
     }
+
+    function changePrompt()
+    {
+      var previousInnerHTML = new String();
+
+      previousInnerHTML = previousInnerHTML.concat("test prompt");
+      document.getElementById('pre').innerHTML = previousInnerHTML;
+    }
+
     function debug()
     {
       alert(current_folder);
@@ -234,7 +243,7 @@
       login succesful</br>
       Last login: Fri Mar 13 10:12:20 2015 from 127.0.0.1
     </div>
-      [root@hack-Server]# 
+      [root@hack-Server <script>document.write(currentFolder())</script>]# 
       <input id="command" type="text" autocomplete=off onBlur="getfocus()" onkeydown="submit(command, arguments[0] || window.event)"/>
     </div>
   </body>
