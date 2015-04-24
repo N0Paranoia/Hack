@@ -9,7 +9,6 @@
           font-family: "consolas";
           color: #00EE00;
           font-size: 15px;
-          /*font-size: 1.25vh;*/
       }
       input 
       {
@@ -21,79 +20,11 @@
           font-family: "consolas";
           color: #00EE00;
           font-size: 15px;
-          /*font-size: 1.25vh;*/
       }
 
-      #prompt
+      .input
       {
           background-color: #001100;
-          width: 50%;
-          border: none;
-          padding: 0px;
-          outline: none;
-          font-family: "consolas";
-          color: #00EE00;
-          font-size: 15px;
-      }
-      #console
-      {
-          background-color: #001100;
-          width: 50%;
-          border: none;
-          padding: 0px;
-          outline: none;
-          font-family: "consolas";
-          color: #00EE00;
-          font-size: 15px;
-      }
-      #usr
-      {
-          background-color: #001100;
-          width: 50%;
-          border: none;
-          padding: 0px;
-          outline: none;
-          font-family: "consolas";
-          color: #00EE00;
-          font-size: 15px;
-      }
-      #user
-      {
-          background-color: #001100;
-          width: 50%;
-          border: none;
-          padding: 0px;
-          outline: none;
-          font-family: "consolas";
-          color: #00EE00;
-          font-size: 15px;
-      }
-      #userinput
-      {
-          background-color: #001100;
-          width: 50%;
-          border: none;
-          padding: 0px;
-          outline: none;
-          font-family: "consolas";
-          color: #00EE00;
-          font-size: 15px;
-      }
-      #pw
-      {
-          background-color: #001100;
-          width: 50%;
-          border: none;
-          padding: 0px;
-          outline: none;
-          font-family: "consolas";
-          color: #00EE00;
-          font-size: 15px;
-      }
-      #pass
-      {
-          background-color: #001100;
-          width: 50%;
           border: none;
           padding: 0px;
           outline: none;
@@ -115,9 +46,11 @@
     var commando4 = "com4";
     var commando5 = "exit";
 
+    
+    var folder1 = 0;
+    var folder2 = 1;
+
     var current_folder = "/";
-    var folder1 = "cd /";
-    var folder2 = "cd /home";
 
     var state_user = 0;
     var state_password = 1;
@@ -174,9 +107,14 @@
       }
     }
 
-    function changeFolder(folder)
+    function currentFolder()
     {
       return current_folder;
+    }
+
+    function changeFolder(folder)
+    {
+      current_folder = folder;
     }
 
     function showhide(boxid, state)
@@ -220,6 +158,7 @@
     
       if(pwInput == Passwd)
       {
+        showhide('passinput', 'none');
         showhide('prompt', 'block');
         changeState(state_password);
         getfocus();
@@ -237,7 +176,7 @@
         var commandInput = document.getElementById("command").value;
 
         previousInnerHTML = document.getElementById('console').innerHTML;
-        previousInnerHTML = previousInnerHTML.concat("<br>[root@hack-Server ",changeFolder(), "]# ", commandInput);
+        previousInnerHTML = previousInnerHTML.concat("<br>[root@hack-Server ",currentFolder(), "]# ", commandInput);
 
         if(commandInput == commando1)
         {
@@ -247,9 +186,9 @@
         {
           previousInnerHTML = previousInnerHTML.concat("<br>com2");   
         }
-        else if(commandInput == folder1)
+        else if(commandInput == folder2)
         {
-          changeFolder(folder1);
+          changeFolder(folder2);
         }        
         else if(commandInput == "")
         {
@@ -265,31 +204,38 @@
         }        
         document.getElementById('console').innerHTML = previousInnerHTML;
     }
+    function debug()
+    {
+      alert(current_folder);
+    }
     
     </script>
   </head>
 <body>
-  <div id="usr">
+  <div class="input" id="usr">
     <div id="user">
     <!-- for the previous commands -->
     </div>
-      <div id="userinput">
-        login as: <input id="username" type="text" onBlur="getfocus()" onkeydown="submit(username, arguments[0] || window.event)"/>
+      <div class="input" id="userinput">
+        login as: <input id="username" type="text" autocomplete=off onBlur="getfocus()" onkeydown="submit(username, arguments[0] || window.event)"/>
       </div>
     </div>
-  <div id="pw">
-    <div id="pass">
+  <div class="input" id="pw">
+    <div class="input" id="pass">
       login as: root</br>
     </div>
-    root@hack's password: <input id="password" type="password" onBlur="getfocus()" onkeydown="submit(password, arguments[0] || window.event)"/>
+    <div class="input" id="passinput">
+      root@hack's password: <input id="password" type="password" autocomplete=off onBlur="getfocus(), debug()" onkeydown="submit(password, arguments[0] || window.event)"/>
+    </div>  
   </div>
-  <div id="prompt">
-    <div id="console">
+  <div class="input" id="prompt">
+    root@hack's password:
+    <div class="input" id="console">
       login succesful</br>
       Last login: Fri Mar 13 10:12:20 2015 from 127.0.0.1
     </div>
-      [root@hack-Server
-      <script language="javascript" type="text/javascript">document.write(changeFolder());</script>]# <input id="command" type="text" onBlur="getfocus()" onkeydown="submit(command, arguments[0] || window.event)"/>
+      [root@hack-Server]# 
+      <input id="command" type="text" autocomplete=off onBlur="getfocus()" onkeydown="submit(command, arguments[0] || window.event)"/>
     </div>
   </body>
 </html>
