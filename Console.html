@@ -10,6 +10,7 @@
           color: #00EE00;
           font-size: 15px;
       }
+
       input 
       {
           background-color: #001100;
@@ -34,21 +35,27 @@
       }
 
     </style>
-
+    <script type="text/javascript" src="http://noparanoia.4ourty2.org//test/output.js"></script>
     <script language="javascript" type="text/javascript">
+
     var Username = "root";
     var Passwd = "welkom";
 
-    // commands
-    var commando1 = "com1";
-    var commando2 = "com2";
-    var commando3 = "com3";
-    var commando4 = "com4";
-    var commando5 = "exit";
+    var folder01 = "/";
+    var folder02 = "/";
+    var folder03 = "home";
 
-    
-    var folder1 = 0;
-    var folder2 = 1;
+    var Commandos = [];
+    Commandos["help"] = commando01;
+    Commandos["date"] = new Date();
+    Commandos["info geobash"] = commando02;
+    // Commandos[pingtest] = commando03;
+    Commandos["traceroute"] = commando04;
+
+    var Folders = [];
+    Folders["cd"] = folder01;
+    Folders["cd /"] = folder02;
+    Folders["cd home"] = folder03;
 
     var current_folder = "/";
 
@@ -115,6 +122,13 @@
     function changeFolder(folder)
     {
       current_folder = folder;
+      document.getElementById('CurrentFolder').innerHTML=current_folder;
+    }
+
+    function ping(ip)
+    {
+      alert(ip);
+      document.getElementById('console').innerHTML = previousInnerHTML;
     }
 
     function showhide(boxid, state)
@@ -126,6 +140,18 @@
     function changeState(cur_state)
     {
       current_state = cur_state+1;
+    }
+
+    function sleep(milliseconds)
+    {
+      var start = new Date().getTime();
+      for (var i = 0; i < 1e7; i++)
+      {
+        if ((new Date().getTime() - start) > milliseconds)
+        {
+          break;
+        }
+      }
     }
 
     function validateUser()
@@ -174,50 +200,39 @@
     {  
         var previousInnerHTML = new String();
         var commandInput = document.getElementById("command").value;
-
         previousInnerHTML = document.getElementById('console').innerHTML;
         previousInnerHTML = previousInnerHTML.concat("<br>[root@hack-Server ",currentFolder(), "]# ", commandInput);
 
-        if(commandInput == commando1)
+        if(Commandos[commandInput])
         {
-          previousInnerHTML = previousInnerHTML.concat("<br>com1");  
+          previousInnerHTML = previousInnerHTML.concat("<br>",Commandos[commandInput]);  
         }
-        else if(commandInput == commando2)
+        else if(Folders[commandInput])
         {
-          previousInnerHTML = previousInnerHTML.concat("<br>com2");   
+          changeFolder(Folders[commandInput]);
         }
-        else if(commandInput == folder2)
+        else if(commandInput.match(/^ping (\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))$/))
         {
-          changeFolder(folder2);
-        }        
+          // ping(commandInput);
+          previousInnerHTML = previousInnerHTML.concat("<br>",commandInput,"  - 56(84) bytes if data.");
+          // sleep(1000);
+        } 
         else if(commandInput == "")
         {
           previousInnerHTML = previousInnerHTML.concat("");  
         }
-        else if(commandInput == commando5)
-        {
-
-        }
         else
         {
           previousInnerHTML = previousInnerHTML.concat("<br>-bash: ",commandInput, ": command not found");
-        }       
+        }    
         document.getElementById('console').innerHTML = previousInnerHTML;
-    }
-
-    function changePrompt()
-    {
-      var previousInnerHTML = new String();
-
-      previousInnerHTML = previousInnerHTML.concat("test prompt");
-      document.getElementById('pre').innerHTML = previousInnerHTML;
     }
 
     function debug()
     {
       alert(current_folder);
     }
-    
+
     </script>
   </head>
 <body>
@@ -234,7 +249,7 @@
       login as: root</br>
     </div>
     <div class="input" id="passinput">
-      root@hack's password: <input id="password" type="password" autocomplete=off onBlur="getfocus(), debug()" onkeydown="submit(password, arguments[0] || window.event)"/>
+      root@hack's password: <input id="password" type="password" autocomplete=off onBlur="getfocus()" onkeydown="submit(password, arguments[0] || window.event)"/>
     </div>  
   </div>
   <div class="input" id="prompt">
@@ -243,8 +258,8 @@
       login succesful</br>
       Last login: Fri Mar 13 10:12:20 2015 from 127.0.0.1
     </div>
-      [root@hack-Server <script>document.write(currentFolder())</script>]# 
-      <input id="command" type="text" autocomplete=off onBlur="getfocus()" onkeydown="submit(command, arguments[0] || window.event)"/>
+      [root@hack-Server <span id="CurrentFolder"><script>document.write(currentFolder());</script></span>]#    
+      <input id="command" type="text" autocomplete=off onBlur="getfocus()" onkeydown="submit(command, arguments[0] || window.event), currentFolder()"/>
     </div>
   </body>
 </html>
