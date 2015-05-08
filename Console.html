@@ -2,29 +2,7 @@
   <head>
     <title>HACK</title>
     
-    <style type="text/css">
-      body 
-      {
-          background-color: #001100;
-          font-family: "consolas";
-          color: #00EE00;
-          font-size: 15px;
-      }
-
-      input, .input
-      {
-          background-color: #001100;
-          white-space:nowrap;
-          width: 80%;
-          border: none;
-          padding: 0px;
-          outline: none;
-          font-family: "consolas";
-          color: #00EE00;
-          font-size: 15px;
-      }
-
-    </style>
+    <link type="text/css" href="http://noparanoia.4ourty2.org//test/terminal.css" rel="stylesheet" />
     <script type="text/javascript" src="http://noparanoia.4ourty2.org//test/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="http://noparanoia.4ourty2.org//test/output.js"></script>
     <script language="javascript" type="text/javascript">
@@ -59,7 +37,7 @@
     window.onload = function()
     {
       showhide('pw', 'none');
-      showhide('prompt', 'none');
+      showhide('terminal', 'none');
       getfocus("username");
     }
 
@@ -133,21 +111,9 @@
       current_state = cur_state+1;
     }
 
-    function sleep(milliseconds)
+    function toBottomLeft()
     {
-      var start = new Date().getTime();
-      for (var i = 0; i < 1e7; i++)
-      {
-        if ((new Date().getTime() - start) > milliseconds)
-        {
-          break;
-        }
-      }
-    }
-
-    function toBottom()
-    {
-      window.scrollTo(0, document.body.scrollHeight);
+      window.scrollTo(1, document.body.scrollHeight);
     }
 
     function validateUser()
@@ -181,7 +147,7 @@
       if(pwInput == Passwd)
       {
         showhide('passinput', 'none');
-        showhide('prompt', 'block');
+        showhide('terminal', 'block');
         changeState(state_password);
         getfocus();
       }
@@ -190,6 +156,29 @@
         previousInnerHTML = previousInnerHTML.concat("root@hack's password:<br>Acces denied: invalid password<br>");
       }
       document.getElementById('pass').innerHTML = previousInnerHTML;
+    }
+
+    function aninmatePing()
+    {
+      showhide('prompt', 'none');
+      var commandInput = document.getElementById("command").value;
+      var number = 29.8;
+      var addNumber = 0.3;
+      var interval = setInterval(function()
+      {
+        if(number < 31.0)
+        {
+          number=number+addNumber
+          $('#console').append("<br> 64 bytes from ", commandInput.replace("ping", ""), ": icmp_seq=1 ttl=53 time=", number.toFixed(1)," ms");
+          toBottomLeft();
+        }
+        else
+        {
+          clearInterval(interval);
+          showhide('prompt', 'block');
+          getfocus();
+        }
+      }, 1000);
     }
 
     function validateCommand()
@@ -210,18 +199,7 @@
         else if(commandInput.match(/^ping (\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))$/))
         { 
           previousInnerHTML = previousInnerHTML.concat("<br>",commandInput,"  - 56 bytes if data.");
-
-          var number = 29.8;
-          var addNumber = 0.3;
-          var interval = setInterval(function()
-          {
-            number=number+addNumber
-            if(number < 31.1)
-            {
-              $('#console').append("<br> 64 bytes from ", commandInput.replace("ping", ""), ": icmp_seq=1 ttl=53 time=", number.toFixed(1)," ms");
-              toBottom();
-            }
-          }, 1000);
+          aninmatePing();
         } 
         else if(commandInput == "")
         {
@@ -230,7 +208,7 @@
         else
         {
           previousInnerHTML = previousInnerHTML.concat("<br>-bash: ",commandInput, ": command not found");
-        }    
+        }
         document.getElementById('console').innerHTML = previousInnerHTML;
     }
 
@@ -248,7 +226,7 @@
     <!-- for the previous commands -->
     </div>
       <div class="input" id="userinput">
-        login as: <input id="username" type="text" autocomplete=off onBlur="getfocus()" onkeydown="submit(username, arguments[0] || window.event), toBottom()"/>
+        login as: <input id="username" type="text" autocomplete=off onBlur="getfocus()" onkeydown="submit(username, arguments[0] || window.event), toBottomLeft()"/>
       </div>
     </div>
   <div class="input" id="pw">
@@ -256,17 +234,19 @@
       login as: root</br>
     </div>
     <div class="input" id="passinput">
-      root@hack's password: <input id="password" type="password" autocomplete=off onBlur="getfocus()" onkeydown="submit(password, arguments[0] || window.event), toBottom()"/>
+      root@hack's password: <input id="password" type="password" autocomplete=off onBlur="getfocus()" onkeydown="submit(password, arguments[0] || window.event), toBottomLeft()"/>
     </div>  
   </div>
-  <div class="input" id="prompt">
+  <div class="input" id="terminal">
     root@hack's password:
     <div class="input" id="console">
       login succesful</br>
       Last login: Fri Mar 13 10:12:20 2015 from 127.0.0.1
     </div>
+      <div class="input" id="prompt">
       [root@hack-Server <span id="CurrentFolder"><script>document.write(currentFolder());</script></span>]#    
-      <input id="command" type="text" autocomplete=off onBlur="getfocus()" onkeydown="submit(command, arguments[0] || window.event), currentFolder(), toBottom()"/>
+      <input id="command" type="text" autocomplete=off onBlur="getfocus()" onkeydown="submit(command, arguments[0] || window.event), currentFolder(), toBottomLeft()"/>
+      </div>
     </div>
   </body>
 </html>
