@@ -169,7 +169,7 @@
         if(number < 31.0)
         {
           number=number+addNumber
-          $('#console').append("<br> 64 bytes from ", commandInput.replace("ping", ""), ": icmp_seq=1 ttl=53 time=", number.toFixed(1)," ms");
+          $('#console').append("<br> 64 bytes from ", commandInput.replace("ping", ""), ": ttl=53 time=", number.toFixed(1)," ms");
           toBottomLeft();
         }
         else
@@ -190,7 +190,7 @@
 
         if(Commandos[commandInput])
         {
-          previousInnerHTML = previousInnerHTML.concat("<br>",Commandos[commandInput]);  
+          previousInnerHTML = previousInnerHTML.concat("<br>",Commandos[commandInput]);
         }
         else if(Folders[commandInput])
         {
