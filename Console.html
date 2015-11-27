@@ -20,6 +20,7 @@
     Commandos["info geobash"] = commando02;
     // Commandos[pingtest] = commando03;
     Commandos["traceroute"] = commando04;
+    //Commandos["exit"] = commando05;
 
     var Folders = [];
     Folders["cd"] = folder01;
@@ -201,9 +202,15 @@
           previousInnerHTML = previousInnerHTML.concat("<br>",commandInput,"  - 56 bytes if data.");
           aninmatePing();
         } 
+        else if(commandInput == "exit")
+        {
+			window.alert("Are you sure you want to close the session");
+			window.open('','_parent','');
+	        window.close();
+        }
         else if(commandInput == "")
         {
-          previousInnerHTML = previousInnerHTML.concat("");  
+          previousInnerHTML = previousInnerHTML.concat("");
         }
         else
         {
@@ -227,6 +234,7 @@
     </div>
       <div class="input" id="userinput">
         login as: <input id="username" type="text" autocomplete=off onBlur="getfocus()" onkeydown="submit(username, arguments[0] || window.event), toBottomLeft()"/>
+        <input id="cancel_autocomplet1" type="text" style="display:none" />
       </div>
     </div>
   <div class="input" id="pw">
@@ -235,6 +243,7 @@
     </div>
     <div class="input" id="passinput">
       root@hack's password: <input id="password" type="password" autocomplete=off onBlur="getfocus()" onkeydown="submit(password, arguments[0] || window.event), toBottomLeft()"/>
+        <input id="cancel_autocomplete2" type="password" style="display:none" />
     </div>  
   </div>
   <div class="input" id="terminal">

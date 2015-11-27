@@ -6,13 +6,13 @@
                         to see this list. Use \`info geobash\' to find out more about the<br>\
                         shell in general.<br>\
  						<br>\
- 						cat [OPTION] [FILE] ................ concatenate files and print on the standard output<br>\
- 						cd [directory] ..................... cd change the working directory<br>\
- 						date ............................... print the system date and time<br>\
- 						ping [remote host] ................. send ICMP ECHO_REQUEST to network hosts<br>\
- 						ls [OPTION] [FILE] ................. list directory contents<br>\
- 						traceroute [remote host]............ print the route packets take to package host<br>\
- 						vi [filename] ...................... screen oriented (visual) display editor based on ex\
+ 						cat [OPTION] [FILE] ........... concatenate files and print on the standard output<br>\
+ 						cd [directory] ................ cd change the working directory<br>\
+ 						date .......................... print the system date and time<br>\
+ 						ping [remote host] ............ send ICMP ECHO_REQUEST to network hosts<br>\
+ 						ls [OPTION] [FILE] ............ list directory contents<br>\
+ 						traceroute [remote host]....... print the route packets take to package host<br>\
+ 						vi [filename] ................. screen oriented (visual) display editor based on ex\
  					";
 
     var commando02 = "\
@@ -37,6 +37,5 @@
 
 
     var commando03 = "ping";
-
     var commando04 = "traceroute";
-    var commando05 = "exit";
+    var commando05 = "close";
