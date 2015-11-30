@@ -12,7 +12,7 @@
 
     var folder01 = "/";
     var folder02 = "/";
-    var folder03 = "home";
+    var folder03 = "/home";
 
     var Commandos = [];
     Commandos["help"] = commando01;
@@ -35,71 +35,102 @@
 
     var current_state = state_user;
 
+	var test = 0;	
+	var last_command = [""];
+
+	var command_counter = 0;
+	
     window.onload = function()
     {
-      showhide('pw', 'none');
-      showhide('terminal', 'none');
-      getfocus("username");
+		showhide('pw', 'none');
+		showhide('terminal', 'none');
+		getfocus("username");
     }
 
     function submit(id, event)
     {
-      key = event.keyCode | event.charCode;
-      if (key == 13)
-      { 
-        if(id == username)
-        {
-          validateUser();
-          id.value=''; 
-          return false; 
-        }
-        else if(id == password)
-        {
-          validatePassword();
-          id.value=''; 
-          return false; 
-        }
-        else if(id == command)
-        {
-          validateCommand();
-          id.value=''; 
-          return false; 
-        }
-      }
+		key = event.keyCode | event.charCode;
+		if (key == 13)
+		{ 
+			command_counter = 0;
+			if(id == username)
+			{
+				validateUser();
+				id.value=''; 
+				return false;
+			}
+			else if(id == password)
+			{
+				validatePassword();
+				id.value=''; 
+				return false; 
+			}
+        	else if(id == command)
+			{
+				validateCommand();
+				id.value=''; 
+				return false; 
+        	}
+		}
+		else if(key == 38)
+		{
+			if(last_command[last_command.length -command_counter] != 0)
+			{
+				command_counter += 1;
+				document.getElementById("command").value = last_command[last_command.length -command_counter];
+			}
+		}
+		else if(key == 40)
+		{
+//--------------------------------------------------------------------------------------------------------------//	
+//-------------------------------------------Needs some work----------------------------------------------------//
+//--------------------------------------------------------------------------------------------------------------//
+			if(last_command[last_command.length -command_counter])
+			{
+				command_counter -= 1;
+				document.getElementById("command").value = last_command[last_command.length -command_counter];
+			}
+		}
     }
 
     function getfocus()
     {
-      if(current_state == state_user)
-      {
-        document.getElementById('username').focus();
-      }
-      else if(current_state == state_password)
-      {
-        document.getElementById('password').focus();
-      }
-      else if(current_state == state_command)
-      {
-        document.getElementById('command').focus();
-      }
+		if(current_state == state_user)
+		{
+        	document.getElementById('username').focus();
+		}
+		else if(current_state == state_password)
+		{
+        	document.getElementById('password').focus();
+		}
+		else if(current_state == state_command)
+      	{
+        	document.getElementById('command').focus();
+		}
     }
 
     function currentFolder()
     {
-      return current_folder;
+		return current_folder;
     }
 
     function changeFolder(folder)
     {
-      current_folder = folder;
-      document.getElementById('CurrentFolder').innerHTML=current_folder;
+		current_folder = folder;
+		document.getElementById('CurrentFolder').innerHTML=current_folder;
     }
 
     function ping(ip)
     {
-      alert(ip);
-      document.getElementById('console').innerHTML = previousInnerHTML;
+		alert(ip);
+		document.getElementById('console').innerHTML = previousInnerHTML;
     }
+
+	function recoverLastCommand(command)
+	{
+		test += 1;
+		last_command[test] = command;
+	}
 
     function showhide(boxid, state)
     {
@@ -109,89 +140,91 @@
 
     function changeState(cur_state)
     {
-      current_state = cur_state+1;
+		current_state = cur_state+1;
     }
 
     function toBottomLeft()
     {
-      window.scrollTo(1, document.body.scrollHeight);
+    	window.scrollTo(1, document.body.scrollHeight);
     }
 
     function validateUser()
     {
-      var previousInnerHTML = new String();
-      var userInput = document.getElementById("username").value;
+		var previousInnerHTML = new String();
+		var userInput = document.getElementById("username").value;
 
-      previousInnerHTML = document.getElementById('user').innerHTML;
+		previousInnerHTML = document.getElementById('user').innerHTML;
 
-      if(userInput == Username)
-      {
-        showhide('userinput', 'none');
-        showhide('pw', 'block');
-        changeState(state_user);
-        getfocus();
-      }
-      else
-      {
-        previousInnerHTML = previousInnerHTML.concat("login as: ", userInput, "<br>", userInput, ": invalid username<br>");
-      }
-      document.getElementById('user').innerHTML = previousInnerHTML;      
+		if(userInput.toLowerCase() == Username)
+		{
+			showhide('userinput', 'none');
+			showhide('pw', 'block');
+			changeState(state_user);
+			getfocus();
+		}
+		else
+		{
+			previousInnerHTML = previousInnerHTML.concat("login as: ", userInput, "<br>", userInput, ": invalid username<br>");
+		}
+		document.getElementById('user').innerHTML = previousInnerHTML;      
     }
 
     function validatePassword()
     {
-      var previousInnerHTML = new String();
-      var pwInput = document.getElementById("password").value;
+		var previousInnerHTML = new String();
+      	var pwInput = document.getElementById("password").value;
 
-      previousInnerHTML = document.getElementById('pass').innerHTML;
+		previousInnerHTML = document.getElementById('pass').innerHTML;
     
-      if(pwInput == Passwd)
-      {
-        showhide('passinput', 'none');
-        showhide('terminal', 'block');
-        changeState(state_password);
-        getfocus();
-      }
-      else
-      {
-        previousInnerHTML = previousInnerHTML.concat("root@hack's password:<br>Acces denied: invalid password<br>");
-      }
-      document.getElementById('pass').innerHTML = previousInnerHTML;
+		if(pwInput.toLowerCase() == Passwd)
+		{
+			showhide('passinput', 'none');
+			showhide('terminal', 'block');
+			changeState(state_password);
+			getfocus();
+      	}
+			else
+		{
+			previousInnerHTML = previousInnerHTML.concat("root@hack's password:<br>Acces denied: invalid password<br>");
+		}
+		document.getElementById('pass').innerHTML = previousInnerHTML;
     }
 
     function aninmatePing()
     {
-      showhide('prompt', 'none');
-      var commandInput = document.getElementById("command").value;
-      var number = 29.8;
-      var addNumber = 0.3;
-      var interval = setInterval(function()
-      {
-        if(number < 31.0)
-        {
-          number=number+addNumber
-          $('#console').append("<br> 64 bytes from ", commandInput.replace("ping", ""), ": ttl=53 time=", number.toFixed(1)," ms");
-          toBottomLeft();
-        }
-        else
-        {
-          clearInterval(interval);
-          showhide('prompt', 'block');
-          getfocus();
-        }
-      }, 1000);
+		showhide('prompt', 'none');
+		var commandInput = document.getElementById("command").value;
+		var number = 29.8;
+		var addNumber = 0.3;
+		var interval = setInterval(function()
+		{
+			if(number < 31.0)
+			{
+				number=number+addNumber
+				$('#console').append("<br> 64 bytes from ", commandInput.replace("ping", ""), ": ttl=53 time=", number.toFixed(1)," ms");
+				toBottomLeft();
+			}
+			else
+			{
+				clearInterval(interval);
+				showhide('prompt', 'block');
+				getfocus();
+			}
+		}, 1000);
     }
 
-    function validateCommand()
+	function validateCommand()
     {  
-        var previousInnerHTML = new String();
+		var previousInnerHTML = new String();
         var commandInput = document.getElementById("command").value;
         previousInnerHTML = document.getElementById('console').innerHTML;
         previousInnerHTML = previousInnerHTML.concat("<br>[root@hack-Server ",currentFolder(), "]# ", commandInput);
+		
+		recoverLastCommand(commandInput);
 
-        if(Commandos[commandInput])
+        if(Commandos[commandInput.toLowerCase()])
         {
-          previousInnerHTML = previousInnerHTML.concat("<br>",Commandos[commandInput]);
+          previousInnerHTML = previousInnerHTML.concat("<br>",Commandos[commandInput.toLowerCase()]);
         }
         else if(Folders[commandInput])
         {
@@ -204,9 +237,7 @@
         } 
         else if(commandInput == "exit")
         {
-			window.alert("Are you sure you want to close the session");
-			window.open('','_parent','');
-	        window.close();
+			location.reload();
         }
         else if(commandInput == "")
         {
@@ -221,8 +252,12 @@
 
     function debug()
     {
-      alert(current_folder);
+      	alert(current_folder);
     }
+
+<!-- ------------------------------------------------------------------------------------------------------------------------------ -->
+<!-- -------------------------------------------------------HTML STARTS HERE------------------------------------------------------- -->
+<!-- ------------------------------------------------------------------------------------------------------------------------------ -->
 
     </script>
   </head>
