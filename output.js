@@ -38,4 +38,3 @@
 
     var commando03 = "ping";
     var commando04 = "traceroute";
-    var commando05 = "close";

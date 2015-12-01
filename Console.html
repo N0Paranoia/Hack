@@ -20,7 +20,6 @@
     Commandos["info geobash"] = commando02;
     // Commandos[pingtest] = commando03;
     Commandos["traceroute"] = commando04;
-    //Commandos["exit"] = commando05;
 
     var Folders = [];
     Folders["cd"] = folder01;
@@ -35,7 +34,7 @@
 
     var current_state = state_user;
 
-	var test = 0;	
+	var last_command_counter = 0;	
 	var last_command = [""];
 
 	var command_counter = 0;
@@ -128,8 +127,8 @@
 
 	function recoverLastCommand(command)
 	{
-		test += 1;
-		last_command[test] = command;
+		last_command_counter += 1;
+		last_command[last_command_counter] = command;
 	}
 
     function showhide(boxid, state)
@@ -226,16 +225,16 @@
         {
           previousInnerHTML = previousInnerHTML.concat("<br>",Commandos[commandInput.toLowerCase()]);
         }
-        else if(Folders[commandInput])
+        else if(Folders[commandInput.toLowerCase()])
         {
-          changeFolder(Folders[commandInput]);
+          changeFolder(Folders[commandInput.toLowerCase()]);
         }
         else if(commandInput.match(/^ping (\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))$/))
         { 
           previousInnerHTML = previousInnerHTML.concat("<br>",commandInput,"  - 56 bytes if data.");
           aninmatePing();
         } 
-        else if(commandInput == "exit")
+        else if(commandInput.toLowerCase() == "exit")
         {
 			location.reload();
         }
@@ -255,9 +254,9 @@
       	alert(current_folder);
     }
 
-<!-- ------------------------------------------------------------------------------------------------------------------------------ -->
-<!-- -------------------------------------------------------HTML STARTS HERE------------------------------------------------------- -->
-<!-- ------------------------------------------------------------------------------------------------------------------------------ -->
+<!-- ----------------------------------------------------------------------------------------------------------------------------- -->
+<!-- -------------------------------------------------------HTML STARTS HERE------------------------------------------------------ -->
+<!-- ----------------------------------------------------------------------------------------------------------------------------- -->
 
     </script>
   </head>
@@ -269,28 +268,28 @@
     </div>
       <div class="input" id="userinput">
         login as: <input id="username" type="text" autocomplete=off onBlur="getfocus()" onkeydown="submit(username, arguments[0] || window.event), toBottomLeft()"/>
-        <input id="cancel_autocomplet1" type="text" style="display:none" />
-      </div>
-    </div>
-  <div class="input" id="pw">
-    <div class="input" id="pass">
-      login as: root</br>
-    </div>
-    <div class="input" id="passinput">
-      root@hack's password: <input id="password" type="password" autocomplete=off onBlur="getfocus()" onkeydown="submit(password, arguments[0] || window.event), toBottomLeft()"/>
-        <input id="cancel_autocomplete2" type="password" style="display:none" />
-    </div>  
-  </div>
-  <div class="input" id="terminal">
-    root@hack's password:
-    <div class="input" id="console">
-      login succesful</br>
-      Last login: Fri Mar 13 10:12:20 2015 from 127.0.0.1
-    </div>
-      <div class="input" id="prompt">
-      [root@hack-Server <span id="CurrentFolder"><script>document.write(currentFolder());</script></span>]#    
-      <input id="command" type="text" autocomplete=off onBlur="getfocus()" onkeydown="submit(command, arguments[0] || window.event), currentFolder(), toBottomLeft()"/>
-      </div>
-    </div>
-  </body>
+		<input id="cancel_autocomplet1" type="text" style="display:none" />
+	</div>
+</div>
+<div class="input" id="pw">
+	<div class="input" id="pass">
+		login as: root</br>
+		</div>
+			<div class="input" id="passinput">
+				root@hack's password: <input id="password" type="password" autocomplete=off onBlur="getfocus()" onkeydown="submit(password, arguments[0] || window.event), toBottomLeft()"/>
+				<input id="cancel_autocomplete2" type="password" style="display:none" />
+			</div>  
+		</div>	
+		<div class="input" id="terminal">
+			root@hack's password:
+			<div class="input" id="console">
+				login succesful</br>
+				Last login: Fri Mar 13 10:12:20 2015 from 127.0.0.1
+			</div>
+			<div class="input" id="prompt">
+				[root@hack-Server <span id="CurrentFolder"><script>document.write(currentFolder());</script></span>]#    
+				<input id="command" type="text" autocomplete=off onBlur="getfocus()" onkeydown="submit(command, arguments[0] || window.event), currentFolder(), toBottomLeft()"/>
+      		</div>
+    	</div>
+	</body>
 </html>
