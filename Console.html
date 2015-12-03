@@ -1,295 +1,41 @@
 <html>
-  <head>
-    <title>HACK</title>
-    
-    <link type="text/css" href="http://noparanoia.4ourty2.org//test/terminal.css" rel="stylesheet" />
-    <script type="text/javascript" src="http://noparanoia.4ourty2.org//test/jquery-1.11.3.min.js"></script>
-    <script type="text/javascript" src="http://noparanoia.4ourty2.org//test/output.js"></script>
-    <script language="javascript" type="text/javascript">
-
-    var Username = "root";
-    var Passwd = "welkom";
-
-    var folder01 = "/";
-    var folder02 = "/";
-    var folder03 = "/home";
-
-    var Commandos = [];
-    Commandos["help"] = commando01;
-    Commandos["date"] = new Date();
-    Commandos["info geobash"] = commando02;
-    // Commandos[pingtest] = commando03;
-    Commandos["traceroute"] = commando04;
-
-    var Folders = [];
-    Folders["cd"] = folder01;
-    Folders["cd /"] = folder02;
-    Folders["cd home"] = folder03;
-
-    var current_folder = "/";
-
-    var state_user = 0;
-    var state_password = 1;
-    var state_command = 2;
-
-    var current_state = state_user;
-
-	var last_command_counter = 0;	
-	var last_command = [""];
-
-	var command_counter = 0;
-	
-    window.onload = function()
-    {
-		showhide('pw', 'none');
-		showhide('terminal', 'none');
-		getfocus("username");
-    }
-
-    function submit(id, event)
-    {
-		key = event.keyCode | event.charCode;
-		if (key == 13)
-		{ 
-			command_counter = 0;
-			if(id == username)
-			{
-				validateUser();
-				id.value=''; 
-				return false;
-			}
-			else if(id == password)
-			{
-				validatePassword();
-				id.value=''; 
-				return false; 
-			}
-        	else if(id == command)
-			{
-				validateCommand();
-				id.value=''; 
-				return false; 
-        	}
-		}
-		else if(key == 38)
-		{
-			if(last_command[last_command.length -command_counter] != 0)
-			{
-				command_counter += 1;
-				document.getElementById("command").value = last_command[last_command.length -command_counter];
-			}
-		}
-		else if(key == 40)
-		{
-//--------------------------------------------------------------------------------------------------------------//	
-//-------------------------------------------Needs some work----------------------------------------------------//
-//--------------------------------------------------------------------------------------------------------------//
-			if(last_command[last_command.length -command_counter])
-			{
-				command_counter -= 1;
-				document.getElementById("command").value = last_command[last_command.length -command_counter];
-			}
-		}
-    }
-
-    function getfocus()
-    {
-		if(current_state == state_user)
-		{
-        	document.getElementById('username').focus();
-		}
-		else if(current_state == state_password)
-		{
-        	document.getElementById('password').focus();
-		}
-		else if(current_state == state_command)
-      	{
-        	document.getElementById('command').focus();
-		}
-    }
-
-    function currentFolder()
-    {
-		return current_folder;
-    }
-
-    function changeFolder(folder)
-    {
-		current_folder = folder;
-		document.getElementById('CurrentFolder').innerHTML=current_folder;
-    }
-
-    function ping(ip)
-    {
-		alert(ip);
-		document.getElementById('console').innerHTML = previousInnerHTML;
-    }
-
-	function recoverLastCommand(command)
-	{
-		last_command_counter += 1;
-		last_command[last_command_counter] = command;
-	}
-
-    function showhide(boxid, state)
-    {
-        //states: none , block
-        document.getElementById(boxid).style.display=state;
-    }
-
-    function changeState(cur_state)
-    {
-		current_state = cur_state+1;
-    }
-
-    function toBottomLeft()
-    {
-    	window.scrollTo(1, document.body.scrollHeight);
-    }
-
-    function validateUser()
-    {
-		var previousInnerHTML = new String();
-		var userInput = document.getElementById("username").value;
-
-		previousInnerHTML = document.getElementById('user').innerHTML;
-
-		if(userInput.toLowerCase() == Username)
-		{
-			showhide('userinput', 'none');
-			showhide('pw', 'block');
-			changeState(state_user);
-			getfocus();
-		}
-		else
-		{
-			previousInnerHTML = previousInnerHTML.concat("login as: ", userInput, "<br>", userInput, ": invalid username<br>");
-		}
-		document.getElementById('user').innerHTML = previousInnerHTML;      
-    }
-
-    function validatePassword()
-    {
-		var previousInnerHTML = new String();
-      	var pwInput = document.getElementById("password").value;
-
-		previousInnerHTML = document.getElementById('pass').innerHTML;
-    
-		if(pwInput.toLowerCase() == Passwd)
-		{
-			showhide('passinput', 'none');
-			showhide('terminal', 'block');
-			changeState(state_password);
-			getfocus();
-      	}
-			else
-		{
-			previousInnerHTML = previousInnerHTML.concat("root@hack's password:<br>Acces denied: invalid password<br>");
-		}
-		document.getElementById('pass').innerHTML = previousInnerHTML;
-    }
-
-    function aninmatePing()
-    {
-		showhide('prompt', 'none');
-		var commandInput = document.getElementById("command").value;
-		var number = 29.8;
-		var addNumber = 0.3;
-		var interval = setInterval(function()
-		{
-			if(number < 31.0)
-			{
-				number=number+addNumber
-				$('#console').append("<br> 64 bytes from ", commandInput.replace("ping", ""), ": ttl=53 time=", number.toFixed(1)," ms");
-				toBottomLeft();
-			}
-			else
-			{
-				clearInterval(interval);
-				showhide('prompt', 'block');
-				getfocus();
-			}
-		}, 1000);
-    }
-
-	function validateCommand()
-    {  
-		var previousInnerHTML = new String();
-        var commandInput = document.getElementById("command").value;
-        previousInnerHTML = document.getElementById('console').innerHTML;
-        previousInnerHTML = previousInnerHTML.concat("<br>[root@hack-Server ",currentFolder(), "]# ", commandInput);
-		
-		recoverLastCommand(commandInput);
-
-        if(Commandos[commandInput.toLowerCase()])
-        {
-          previousInnerHTML = previousInnerHTML.concat("<br>",Commandos[commandInput.toLowerCase()]);
-        }
-        else if(Folders[commandInput.toLowerCase()])
-        {
-          changeFolder(Folders[commandInput.toLowerCase()]);
-        }
-        else if(commandInput.match(/^ping (\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))$/))
-        { 
-          previousInnerHTML = previousInnerHTML.concat("<br>",commandInput,"  - 56 bytes if data.");
-          aninmatePing();
-        } 
-        else if(commandInput.toLowerCase() == "exit")
-        {
-			location.reload();
-        }
-        else if(commandInput == "")
-        {
-          previousInnerHTML = previousInnerHTML.concat("");
-        }
-        else
-        {
-          previousInnerHTML = previousInnerHTML.concat("<br>-bash: ",commandInput, ": command not found");
-        }
-        document.getElementById('console').innerHTML = previousInnerHTML;
-    }
-
-    function debug()
-    {
-      	alert(current_folder);
-    }
-
-<!-- ----------------------------------------------------------------------------------------------------------------------------- -->
-<!-- -------------------------------------------------------HTML STARTS HERE------------------------------------------------------ -->
-<!-- ----------------------------------------------------------------------------------------------------------------------------- -->
-
-    </script>
-  </head>
-<body>
-  
-  <div class="input" id="usr">
-    <div id="user">
-    <!-- for the previous commands -->
-    </div>
-      <div class="input" id="userinput">
-        login as: <input id="username" type="text" autocomplete=off onBlur="getfocus()" onkeydown="submit(username, arguments[0] || window.event), toBottomLeft()"/>
-		<input id="cancel_autocomplet1" type="text" style="display:none" />
-	</div>
-</div>
-<div class="input" id="pw">
-	<div class="input" id="pass">
-		login as: root</br>
+	<head>
+		<link type="text/css" href="terminal.css" rel="stylesheet" />
+		<script src="jquery-1.11.3.min.js" type="text/javascript"></script>
+		<script src="output.js" type="text/javascript"></script>
+		<script src="console.js" type="text/javascript"></script>
+	</head>
+	<body onload="onLoad()">
+		<div class="input" id="usr">
+			<div id="user">
+				<!-- for the previous commands -->
+			</div>
+			<div class="input" id="userinput">
+				login as: 
+				<input id="username" type="text" autocomplete="off" onBlur="getFocus()" onkeydown="submit(username, arguments[0] || window.event)" />
+				<input id="cancel_autocomplete_usr" type="text" style="display:none" />
+			</div>
 		</div>
+		<div class="input" id="pw">
+			<div class="input" id="pass">
+				login as: root </br>
+			</div>
 			<div class="input" id="passinput">
-				root@hack's password: <input id="password" type="password" autocomplete=off onBlur="getfocus()" onkeydown="submit(password, arguments[0] || window.event), toBottomLeft()"/>
-				<input id="cancel_autocomplete2" type="password" style="display:none" />
-			</div>  
-		</div>	
+				root@hack's password: 
+				<input id="password" type="password" autocomplete="off" onBlur="getFocus()" onkeydown="submit(password, arguments[0] || window.event)" />
+				<input id="cancel_autocomplete_pw" type="text" style="display:none" />
+			</div>
+		</div>
 		<div class="input" id="terminal">
 			root@hack's password:
 			<div class="input" id="console">
 				login succesful</br>
-				Last login: Fri Mar 13 10:12:20 2015 from 127.0.0.1
+				Last login: Mon Jan 01 00:00:00 1900 from 0.0.0.0
 			</div>
 			<div class="input" id="prompt">
-				[root@hack-Server <span id="CurrentFolder"><script>document.write(currentFolder());</script></span>]#    
-				<input id="command" type="text" autocomplete=off onBlur="getfocus()" onkeydown="submit(command, arguments[0] || window.event), currentFolder(), toBottomLeft()"/>
-      		</div>
-    	</div>
+				[root@hack-Server <span id="CurrentFolder"><script>document.write(currentFolder());</script></span>]#
+				<input id="command" type="text" autocomplete="off" onBlur="getFocus()" onkeydown="submit(command, arguments[0] || window.event), currentFolder()" />
+			</div>
+		</div>	
 	</body>
 </html>

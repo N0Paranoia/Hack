@@ -1,5 +1,5 @@
-    // commands
-    var commando01 = "\
+// commands
+var commando01 = "\
     					<br>\
     					GNU bash, version 4.1.7-release (i586-NoParanoia-linux-GeoBash<br>\
  						shell). These shell commands are defined internally.  Type \`help\'<br>\
@@ -15,8 +15,8 @@
  						vi [filename] ................. screen oriented (visual) display editor based on ex\
  					";
 
-    var commando02 = "\
-    					<br>\
+var commando02 = "\
+						<br>\
     					GeoBash Features<br>\
     					****************<br>\
     					<br>\
@@ -36,5 +36,5 @@
 
 
 
-    var commando03 = "ping";
-    var commando04 = "traceroute";
+var commando03 = "ping";
+var commando04 = "traceroute";
