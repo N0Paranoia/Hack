@@ -6,11 +6,6 @@ var state_password = 1;
 var state_command = 2;
 var current_state = state_user;
 
-var commandos = [];
-commandos["date"] = new Date();
-commandos["help"] = commando01;
-commandos["info geobash"] = commando02;
-
 function onLoad()
 {
 	showHide("pw", "none");
@@ -147,26 +142,15 @@ function validateCommand()
 	previousInnerHTML = document.getElementById('console').innerHTML;
 	previousInnerHTML = previousInnerHTML.concat("<br>[root@hack-Server ", "CURRENT_FOLDER", "]# ", commandInput);
 
-	if(commandos[commandInput.toLowerCase()])
+	
+	if(commandInput.match(/^ping (\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))$/))
 	{
-		previousInnerHTML = previousInnerHTML.concat("<br>",commandos[commandInput.toLowerCase()]);
-	}
-	else if(commandInput.match(/^ping (\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))$/))
-	{ ;
 		previousInnerHTML = previousInnerHTML.concat("<br>",commandInput,"  - 56 bytes if data.");
 		animatePing();
 	}
-	else if(commandInput.toLowerCase() == "exit")
-	{
-		location.reload();
-	}
-	else if(commandInput == "")
-	{
-		preciousInnerHTML = previousInnerHTML.concat("");
-	}
 	else
 	{
-		previousInnerHTML = previousInnerHTML.concat("<br>-bash: ",commandInput, ": command not found");
-	}   
+		previousInnerHTML = previousInnerHTML.concat(output(commandInput.toLowerCase()));
+	}
 	document.getElementById('console').innerHTML = previousInnerHTML;
 }

@@ -1,5 +1,15 @@
-// commands
-var commando01 = "\
+function output(input)
+{
+	switch(input)
+	{
+		case "date":
+			return "<br>" + new Date();
+			break;
+		case "exit":
+			location.reload();
+			break;
+		case "help":
+			return "\
     					<br>\
     					GNU bash, version 4.1.7-release (i586-NoParanoia-linux-GeoBash<br>\
  						shell). These shell commands are defined internally.  Type \`help\'<br>\
@@ -14,8 +24,9 @@ var commando01 = "\
  						traceroute [remote host]....... print the route packets take to package host<br>\
  						vi [filename] ................. screen oriented (visual) display editor based on ex\
  					";
-
-var commando02 = "\
+			break;
+		case "info geobash":
+			return "\
 						<br>\
     					GeoBash Features<br>\
     					****************<br>\
@@ -33,8 +44,13 @@ var commando02 = "\
 						Bourne Shell (`sh'), the Korn Shell(`ksh'), and the C-shell <br>\
                         (`csh' and its successor, `tcsh').\
     				";
+			break;
+		case "":
+			return "";
+			break;			
+		default:
+			return "<br>" + input + ": command not found";	
+			break;
+	}
 
-
-
-var commando03 = "ping";
-var commando04 = "traceroute";
+}
