@@ -6,9 +6,7 @@ var state_password = 1;
 var state_command = 2;
 var current_state = state_user;
 
-var folder1 = "/";
-
-var currrent_folder = folder1;
+var currentfolder = "/";
 
 function onLoad()
 {
@@ -42,16 +40,6 @@ function showHide(boxid, state)
 function changeState(new_state)
 {
 	current_state = new_state;
-}
-
-function currentFolder()
-{
-	return current_folder;
-}
-
-function changeFoder(new_folder)
-{
-	current_folder = new_folder;
 }
 
 function animatePing()
@@ -154,13 +142,17 @@ function validateCommand()
 	var previousInnerHTML = new String();
 	var commandInput = document.getElementById("command").value;
 	previousInnerHTML = document.getElementById('console').innerHTML;
-	previousInnerHTML = previousInnerHTML.concat("<br>[root@hack-Server ", currrent_folder, "]# ", commandInput);
+	previousInnerHTML = previousInnerHTML.concat("<br>[root@hack-Server ", currentfolder, "]# ", commandInput);
 
 	
 	if(commandInput.match(/^ping (\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))$/))
 	{
 		previousInnerHTML = previousInnerHTML.concat("<br>",commandInput,"  - 56 bytes if data.");
 		animatePing();
+	}
+	else if(commandInput.match(/^cd /i))
+	{
+		validateFolder(commandInput);
 	}
 	else
 	{
