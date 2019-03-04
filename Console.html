@@ -3,6 +3,7 @@
 		<link type="text/css" href="terminal.css" rel="stylesheet" />
 		<script src="jquery-1.11.3.min.js" type="text/javascript"></script>
 		<script src="folders.js" type="text/javascript"></script>
+		<script src="users.js" type="text/javascript"></script>
 		<script src="output.js" type="text/javascript"></script>
 		<script src="console.js" type="text/javascript"></script>
 	</head>
@@ -19,22 +20,22 @@
 		</div>
 		<div class="input" id="pw">
 			<div class="input" id="pass">
-				login as: root </br>
+				login as: <span id="PassCurrentUser"><script>document.write(currentUser());</script></span> </br>
 			</div>
 			<div class="input" id="passinput">
-				root@hack's password: 
+				<span id="PassInputCurrentUser"><script>document.write(currentUser());</script></span>@hack's password: 
 				<input id="password" type="password" autocomplete="off" onBlur="getFocus()" onkeydown="submit(password, arguments[0] || window.event)" />
 				<input id="cancel_autocomplete_pw" type="text" style="display:none" />
 			</div>
 		</div>
 		<div class="input" id="terminal">
-			root@hack's password:
+			<span id="TerminalCurrentUser"><script>document.write(currentUser());</script></span>@hack's password:
 			<div class="input" id="console">
 				login succesful</br>
-				Last login: Mon Jan 01 00:00:00 1900 from 0.0.0.0
+				Last login: Wen Jan 07 20:29:56 1981 from 127.0.0.1
 			</div>
 			<div class="input" id="prompt">
-				[root@hack-Server <span id="CurrentFolder"><script>document.write(currentfolder);</script></span>]#
+				[<span id="PromptCurrentUser"><script>document.write(currentUser());</script></span>@hack-Server <span id="CurrentFolder"><script>document.write(currentFolder());</script></span>]#
 				<input id="command" type="text" autocomplete="off" onBlur="getFocus()" onkeydown="submit(command, arguments[0] || window.event)" />
 			</div>
 		</div>	

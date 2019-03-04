@@ -1,3 +1,8 @@
+// TOOD
+// - [ ] Trace route en ping nog help bij niet meegeven ip
+// - [ ] Kill nodes script op basis van 3 ip
+// - [ ] nice to have = Logboek functionaliteit
+
 var Usrname = "root";
 var Passwd = "welkom";
 
@@ -5,8 +10,6 @@ var state_user = 0;
 var state_password = 1;
 var state_command = 2;
 var current_state = state_user;
-
-var currentfolder = "/";
 
 function onLoad()
 {
@@ -66,6 +69,36 @@ function animatePing()
 	}, 1000);
 }
 
+function animateTraceroute()
+{
+	showHide('prompt', 'none');
+	var commandInput = document.getElementById("command").value;
+	var number = 0;
+	var miliseconds = 15.533;
+	var changemiliseconds = 4.014
+	var addNumber = 1;
+	var numberOfNodes = 4
+	var dnsnames = ["www.google.com","dw-vpnproxy.nl-ox.net","public-ix-net.bl-ix.net","tor.secure-net.co.uk","\u5895\u7468-\u4E2D\u4320.\u6381\u1153\u56FD.\u4E2D"]
+	var ipnummer = ["8.8.8.8","108.170.242.123","216.239.42.115","214.170.236.19","82.150.158.221"]
+
+	var interval = setInterval(function()
+	{
+		if(number < numberOfNodes)
+		{
+			number=number+addNumber
+			$('#console').append("<br> ", number," ",dnsnames[number], " (",ipnummer[number], ") ", miliseconds.toFixed(3)," ms ",(miliseconds=miliseconds-changemiliseconds).toFixed(3)," ms ",(miliseconds=miliseconds-changemiliseconds).toFixed(3)," ms");
+			window.scrollTo(1, document.body.scrollHeight);
+			miliseconds = miliseconds*2
+		}
+		else
+		{
+			clearInterval(interval);
+			showHide('prompt', 'block');
+			getFocus();
+		}
+	}, 1000);
+}
+
 function submit(id, event)
 {
 	key = event.keyCode | event.charCode;
@@ -102,8 +135,13 @@ function validateAccount(state)
 	
 			previousInnerHTML = document.getElementById('user').innerHTML;
 
-			if(userInput.toLowerCase() == Usrname)
+			if(userInput == Usrname)
 			{
+				var newUserInput = "su "+userInput;
+				changeUser(Users[newUserInput],'PassCurrentUser');
+				changeUser(Users[newUserInput],'PassInputCurrentUser');
+				changeUser(Users[newUserInput],'TerminalCurrentUser');
+				changeUser(Users[newUserInput],'PromptCurrentUser');
 				showHide('userinput', 'none');
 				showHide('pw', 'block');
 				changeState(state_password);
@@ -130,11 +168,33 @@ function validateAccount(state)
 			}
 			else
 			{
-				previousInnerHTML = previousInnerHTML.concat("root@hack's password:<br>Acces denied: invalid password<br>");
+				previousInnerHTML = previousInnerHTML.concat("NoParanoia@hack's password:<br>Acces denied: invalid password<br>");
 			}
 			document.getElementById('pass').innerHTML = previousInnerHTML;
 			break;
 	}
+}
+
+function currentFolder()
+{
+    return current_folder;
+}
+
+function changeFolder(newFolder)
+{
+    current_folder = newFolder;
+    document.getElementById('CurrentFolder').innerHTML=current_folder;
+}
+
+function currentUser()
+{
+	return current_user;
+}
+
+function changeUser(newUser, div)
+{
+	current_user = newUser;
+	document.getElementById(div).innerHTML=current_user;
 }
 
 function validateCommand()
@@ -142,7 +202,7 @@ function validateCommand()
 	var previousInnerHTML = new String();
 	var commandInput = document.getElementById("command").value;
 	previousInnerHTML = document.getElementById('console').innerHTML;
-	previousInnerHTML = previousInnerHTML.concat("<br>[root@hack-Server ", currentfolder, "]# ", commandInput);
+	previousInnerHTML = previousInnerHTML.concat("<br>[",current_user,"@hack-Server ", current_folder, "]# ", commandInput);
 
 	
 	if(commandInput.match(/^ping (\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))$/))
@@ -150,13 +210,22 @@ function validateCommand()
 		previousInnerHTML = previousInnerHTML.concat("<br>",commandInput,"  - 56 bytes if data.");
 		animatePing();
 	}
-	else if(commandInput.match(/^cd /i))
+	else if(commandInput.match(/^traceroute (\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))$/))
 	{
-		validateFolder(commandInput);
+		previousInnerHTML = previousInnerHTML.concat("<br>",commandInput," (",commandInput.replace("traceroute","")," ), 64 hops max, 52 byte packets");
+		animateTraceroute();
+	}
+	else if(Folders[commandInput])
+	{
+        changeFolder(Folders[commandInput]);
+	}
+	else if(Users[commandInput])
+	{
+		changeUser(Users[commandInput]);
 	}
 	else
 	{
-		previousInnerHTML = previousInnerHTML.concat(output(commandInput.toLowerCase()));
+		previousInnerHTML = previousInnerHTML.concat(output(commandInput.toLowerCase(), currentFolder()));
 	}
 	document.getElementById('console').innerHTML = previousInnerHTML;
 }

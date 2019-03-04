@@ -1,4 +1,6 @@
-function output(input)
+var str = "Dit is een test";
+
+function output(input, folder)
 {
 	switch(input)
 	{
@@ -11,9 +13,9 @@ function output(input)
 		case "help":
 			return "\
     					<br>\
-    					GNU bash, version 4.1.7-release (i586-NoParanoia-linux-GeoBash<br>\
+						GNU bash, version 4.2-release (build: GC846C0) (i586-NoParanoia-linux version 42<br>\
  						shell). These shell commands are defined internally.  Type \`help\'<br>\
-                        to see this list. Use \`info geobash\' to find out more about the<br>\
+                        to see this list. Use \`info bash\' to find out more about the<br>\
                         shell in general.<br>\
  						<br>\
  						cat [OPTION] [FILE] ........... concatenate files and print on the standard output<br>\
@@ -25,31 +27,63 @@ function output(input)
  						vi [filename] ................. screen oriented (visual) display editor based on ex\
  					";
 			break;
-		case "info geobash":
+		case "info bash":
 			return "\
 						<br>\
-    					GeoBash Features<br>\
+    					Bash Features<br>\
     					****************<br>\
     					<br>\
 						This text is a brief description of the features that are <br>\
-						present in the GeoBash shell (version 6.4, 30 February 2014).<br>\
-						The GeoBash home page is `http://www.geobash-stuff.org/'.<br>\
+						present in the Bash shell (version 6.4, 30 February 2014).<br>\
+						The Bash home page is `http://www.bash-stuff.org/'.<br>\
 						<br>\
-						   This is Edition 4.3, last updated 30 February 2014, of <br>\
-						`The GNU Bash Reference Manual', for `GeoBash', Version 6.4.<br>\
+						   This is Edition 4.2 (build: GC846C0), last updated 30 February 2014, of <br>\
+						`The GNU Bash Reference Manual', for `Bash', Version 6.4.<br>\
 						<br>\
-						   GeoBash contains features that appear in other popular<br>\
-						shells, and some features that only appear in GeoBash.  Some<br>\
-						of the shells that GeoBash has borrowed concepts from are the<br>\
+						   Bash contains features that appear in other popular<br>\
+						shells, and some features that only appear in Bash.  Some<br>\
+						of the shells that Bash has borrowed concepts from are the<br>\
 						Bourne Shell (`sh'), the Korn Shell(`ksh'), and the C-shell <br>\
                         (`csh' and its successor, `tcsh').\
     				";
 			break;
+        case "ls":
+            switch(folder)
+            {
+                case "/":
+                    var str = "Test string";
+                    return "\
+                            <br>\
+                            drwxr-xr-x&nbsp;&nbsp1&nbsp;&nbsp;noparanoia&nbsp;&nbsp;&nbsp;&nbsp;users&nbsp;&nbsp;&nbsp;&nbsp;4096 01.07.1981 20:30 documents/<br>\
+                            drwxr-xr-x&nbsp;&nbsp1&nbsp;&nbsp;noparanoia&nbsp;&nbsp;&nbsp;&nbsp;users&nbsp;&nbsp;&nbsp;&nbsp;4096 01.07.1981 20:30 files/<br>\
+                            drwxr-xr-x&nbsp;&nbsp1&nbsp;&nbsp;noparanoia&nbsp;&nbsp;&nbsp;&nbsp;users&nbsp;&nbsp;&nbsp;&nbsp;4096 01.07.1981 20:30 pictures<br>\
+                            drwxr-xr-x&nbsp;&nbsp1&nbsp;&nbsp;noparanoia&nbsp;&nbsp;&nbsp;&nbsp;users&nbsp;&nbsp;&nbsp;&nbsp;4096 01.07.1981 20:30 temp/<br>\
+                            drwxr-xr-x&nbsp;&nbsp1&nbsp;&nbsp;noparanoia&nbsp;&nbsp;&nbsp;&nbsp;users&nbsp;&nbsp;&nbsp;&nbsp;4096 01.07.1981 20:30 video/<br>\
+                            drwxr-xr-x&nbsp;&nbsp1&nbsp;&nbsp;noparanoia&nbsp;&nbsp;&nbsp;&nbsp;users&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2 01.07.1981 20:30 mumble.txt<br>\
+                            drwxr-xr-x&nbsp;&nbsp1&nbsp;&nbsp;noparanoia&nbsp;&nbsp;&nbsp;&nbsp;users&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2 01.07.1981 20:30 file2.txt\
+                        ";
+                    break;
+                case "/files":
+                    return "\
+                            <br>\
+                            drwxr-xr-x&nbsp;&nbsp1&nbsp;&nbsp;noparanoia&nbsp;&nbsp;&nbsp;&nbsp;users&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2 01.07.1981 20:30 " + "<a href='http://noparanoia.4ourty2.org/files/gvim74.exe'>gvim74.exe</a><br>\
+                            drwxr-xr-x&nbsp;&nbsp1&nbsp;&nbsp;noparanoia&nbsp;&nbsp;&nbsp;&nbsp;users&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2 01.07.1981 20:30 " + "<a href='http://noparanoia.4ourty2.org/files/The.Walking.Dead.S06E16.INTERNAL.HDTV.x264-KILLERS%5bettv%5d.mp4'>The.Walking.Dead.S06E16.mp4</a>";
+                    break;
+            }
+        case "cat mumble.txt":
+            switch(folder)
+            {
+                case "/":
+                    return "\
+                        <br>test\
+                    ";
+                    break;
+            }
 		case "":
 			return "";
 			break;			
 		default:
-			return "<br>" + input + ": command not found";	
+			return "<br>" + input + ": command not found, type 'help' for a list of available commands";	
 			break;
 	}
 

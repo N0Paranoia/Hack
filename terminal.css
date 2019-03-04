@@ -4,7 +4,7 @@
       background-color: #001100;
       font-family: Lucida Console, Monaco, monospace;
       color: #00EE00;
-      font-size: 10px;
+      font-size: 12px;
   }
 
   body 
@@ -12,7 +12,7 @@
       background-color: #001100;
       font-family: Lucida Console, Monaco, monospace;
       color: #00EE00;
-      font-size: 10px;
+      font-size: 12px;
   }
 
   input, .input
@@ -25,7 +25,9 @@
       outline: none;
       font-family: Lucida Console, Monaco, monospace;
       color: #00EE00;
-      font-size: 20px;
+      font-size: 12px;
+      /* moet weg */
+      /* border: 1px green solid; */
   }
 
   iframe
