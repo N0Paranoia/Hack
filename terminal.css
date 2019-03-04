@@ -1,39 +1,37 @@
-<style type="text/css">
-  * 
-  {
-      background-color: #001100;
-      font-family: Lucida Console, Monaco, monospace;
-      color: #00EE00;
-      font-size: 12px;
-  }
+* 
+{
+  background-color: #001100;
+  font-family: Lucida Console, Monaco, monospace;
+  color: #00EE00;
+  font-size: 12px;
+  padding: 0px;
+}
 
-  body 
-  {
-      background-color: #001100;
-      font-family: Lucida Console, Monaco, monospace;
-      color: #00EE00;
-      font-size: 12px;
-  }
+body 
+{
+    background-color: #001100;
+    font-family: Lucida Console, Monaco, monospace;
+    color: #00EE00;
+    font-size: 12px;
+}
 
-  input, .input
-  {
-      background-color: #001100;
-      white-space:nowrap;
-      width: 80%;
-      border: none;
-      padding: 0px;
-      outline: none;
-      font-family: Lucida Console, Monaco, monospace;
-      color: #00EE00;
-      font-size: 12px;
-      /* moet weg */
-      /* border: 1px green solid; */
-  }
-
-  iframe
-  {
+input, .input
+{
+    background-color: #001100;
+    white-space:nowrap;
+    width: 80%;
+    border: none;
     padding: 0px;
-    border: 1px green solid;
-  }
+    outline: none;
+    font-family: Lucida Console, Monaco, monospace;
+    color: #00EE00;
+    font-size: 12px;
+    /* moet weg */
+    /* border: 1px green solid; */
+}
 
-</style>
+iframe 
+{
+  padding: 0px;
+  border: 1px green solid;
+}

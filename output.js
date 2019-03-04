@@ -18,12 +18,12 @@ function output(input, folder)
                         to see this list. Use \`info bash\' to find out more about the<br>\
                         shell in general.<br>\
  						<br>\
- 						cat [OPTION] [FILE] ........... concatenate files and print on the standard output<br>\
- 						cd [directory] ................ cd change the working directory<br>\
+						cd [directory] ................ cd change the working directory<br>\
+						cat [OPTION] [FILE] ........... concatenate files and print on the standard output<br>\
+						ls [OPTION] [FILE] ............ list directory contents<br>\
  						date .......................... print the system date and time<br>\
- 						ping [remote host] ............ send ICMP ECHO_REQUEST to network hosts<br>\
- 						ls [OPTION] [FILE] ............ list directory contents<br>\
- 						traceroute [remote host]....... print the route packets take to package host<br>\
+						ping [remote host] ............ send ICMP ECHO_REQUEST to network hosts<br>\
+						traceroute [remote host]....... print the route packets take to package host<br>\
  						vi [filename] ................. screen oriented (visual) display editor based on ex\
  					";
 			break;
@@ -66,8 +66,7 @@ function output(input, folder)
                 case "/files":
                     return "\
                             <br>\
-                            drwxr-xr-x&nbsp;&nbsp1&nbsp;&nbsp;noparanoia&nbsp;&nbsp;&nbsp;&nbsp;users&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2 01.07.1981 20:30 " + "<a href='http://noparanoia.4ourty2.org/files/gvim74.exe'>gvim74.exe</a><br>\
-                            drwxr-xr-x&nbsp;&nbsp1&nbsp;&nbsp;noparanoia&nbsp;&nbsp;&nbsp;&nbsp;users&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2 01.07.1981 20:30 " + "<a href='http://noparanoia.4ourty2.org/files/The.Walking.Dead.S06E16.INTERNAL.HDTV.x264-KILLERS%5bettv%5d.mp4'>The.Walking.Dead.S06E16.mp4</a>";
+                            drwxr-xr-x&nbsp;&nbsp1&nbsp;&nbsp;noparanoia&nbsp;&nbsp;&nbsp;&nbsp;users&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2 01.07.1981 20:30 " + "<a href='http://noparanoia.4ourty2.org/files/gvim74.exe'>gvim74.exe</a>";
                     break;
             }
         case "cat mumble.txt":
@@ -78,7 +77,19 @@ function output(input, folder)
                         <br>test\
                     ";
                     break;
-            }
+			}
+		case "ping":
+			return "\
+					<br>\
+					usage: ping [ip-address or DNS-name]<br>\
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Exmample: ping 127.0.0.1";
+			break;
+		case "traceroute":
+			return "\
+					<br>\
+					usage: traceroute [ip-address or DNS-name]<br>\
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Exmample: traceroute 127.0.0.1";
+			break;
 		case "":
 			return "";
 			break;			

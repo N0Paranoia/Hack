@@ -1,5 +1,5 @@
 // TOOD
-// - [ ] Trace route en ping nog help bij niet meegeven ip
+// - [x] Trace route en ping nog help bij niet meegeven ip
 // - [ ] Kill nodes script op basis van 3 ip
 // - [ ] nice to have = Logboek functionaliteit
 
