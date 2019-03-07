@@ -3,7 +3,7 @@
 // - [ ] Kill nodes script op basis van 3 ip
 // - [ ] nice to have = Logboek functionaliteit
 
-var Usrname = "root";
+var Usrname = "roo";
 var Passwd = "welkom";
 
 var state_user = 0;
@@ -99,6 +99,11 @@ function animateTraceroute()
 	}, 1000);
 }
 
+function killNodes()
+{
+	
+}
+
 function submit(id, event)
 {
 	key = event.keyCode | event.charCode;
@@ -142,6 +147,8 @@ function validateAccount(state)
 				changeUser(Users[newUserInput],'PassInputCurrentUser');
 				changeUser(Users[newUserInput],'TerminalCurrentUser');
 				changeUser(Users[newUserInput],'PromptCurrentUser');
+				changePrompt(Users[newUserInput],'currentUserPrompt');
+
 				showHide('userinput', 'none');
 				showHide('pw', 'block');
 				changeState(state_password);
@@ -168,7 +175,7 @@ function validateAccount(state)
 			}
 			else
 			{
-				previousInnerHTML = previousInnerHTML.concat("NoParanoia@hack's password:<br>Acces denied: invalid password<br>");
+				previousInnerHTML = previousInnerHTML.concat(currentUser()+"@hGC846C0's password:<br>Acces denied: invalid password<br>");
 			}
 			document.getElementById('pass').innerHTML = previousInnerHTML;
 			break;
@@ -184,6 +191,24 @@ function changeFolder(newFolder)
 {
     current_folder = newFolder;
     document.getElementById('CurrentFolder').innerHTML=current_folder;
+}
+
+function currentPrompt()
+{
+	return current_prompt;
+}
+
+function changePrompt(newPrompt, div)
+{
+	if(newPrompt == 'root')
+	{
+		current_prompt = '#';
+	}
+	else
+	{
+		current_prompt = '$'
+	}
+	document.getElementById(div).innerHTML=current_prompt;
 }
 
 function currentUser()
@@ -202,18 +227,43 @@ function validateCommand()
 	var previousInnerHTML = new String();
 	var commandInput = document.getElementById("command").value;
 	previousInnerHTML = document.getElementById('console').innerHTML;
-	previousInnerHTML = previousInnerHTML.concat("<br>[",current_user,"@hack-Server ", current_folder, "]# ", commandInput);
+	previousInnerHTML = previousInnerHTML.concat("<br>[",current_user,"@GC846C0 ", current_folder, "]# ", commandInput);
 
-	
-	if(commandInput.match(/^ping (\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))$/))
+	if(commandInput.match(/^ping/))
 	{
-		previousInnerHTML = previousInnerHTML.concat("<br>",commandInput,"  - 56 bytes if data.");
-		animatePing();
+		if(commandInput.match(/^ping (\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))$/))
+		{
+			previousInnerHTML = previousInnerHTML.concat("<br>",commandInput,"  - 56 bytes if data.");
+			animatePing();
+		}
+		else
+		{
+			previousInnerHTML = previousInnerHTML.concat(output("ping", currentFolder()));
+		}
 	}
-	else if(commandInput.match(/^traceroute (\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))$/))
+	else if(commandInput.match(/^traceroute/))
 	{
-		previousInnerHTML = previousInnerHTML.concat("<br>",commandInput," (",commandInput.replace("traceroute","")," ), 64 hops max, 52 byte packets");
-		animateTraceroute();
+		if(commandInput.match(/^traceroute (\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))$/))
+		{
+			previousInnerHTML = previousInnerHTML.concat("<br>",commandInput," (",commandInput.replace("traceroute","")," ), 64 hops max, 52 byte packets");
+			animateTraceroute();
+		}
+		else
+		{
+			previousInnerHTML = previousInnerHTML.concat(output("traceroute", currentFolder()));
+		}
+	}
+	else if(commandInput.match(/^killnodes.sh/)) 
+	{	
+		if(commandInput.match(/^killnodes.sh (\d|[1-9]) (\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))$/))
+		{
+			previousInnerHTML = previousInnerHTML.concat("<br>",commandInput," (",commandInput.replace("traceroute","")," ), 64 hops max, 52 byte packets");
+			animateTraceroute();
+		}
+		else
+		{
+			previousInnerHTML = previousInnerHTML.concat(output("killnodes.sh", currentFolder()));
+		}
 	}
 	else if(Folders[commandInput])
 	{

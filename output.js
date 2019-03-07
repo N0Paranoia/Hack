@@ -90,6 +90,12 @@ function output(input, folder)
 					usage: traceroute [ip-address or DNS-name]<br>\
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Exmample: traceroute 127.0.0.1";
 			break;
+		case "killnodes.sh":
+			return "\
+					<br>\
+					usage: killnodes.sh [number of nodes] [ip-address or DNS-name for all the noders]<br>\
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Exmample: killnodes.sh 2 123.123.123.123 213.213.213.213";
+			break;
 		case "":
 			return "";
 			break;			
