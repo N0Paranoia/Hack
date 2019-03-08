@@ -3,7 +3,7 @@
 // - [ ] Kill nodes script op basis van 3 ip
 // - [ ] nice to have = Logboek functionaliteit
 
-var Usrname = "roo";
+var Usrname = "root";
 var Passwd = "welkom";
 
 var state_user = 0;
@@ -76,7 +76,6 @@ function animateTraceroute()
 	var number = 0;
 	var miliseconds = 15.533;
 	var changemiliseconds = 4.014
-	var addNumber = 1;
 	var numberOfNodes = 4
 	var dnsnames = ["www.google.com","dw-vpnproxy.nl-ox.net","public-ix-net.bl-ix.net","tor.secure-net.co.uk","\u5895\u7468-\u4E2D\u4320.\u6381\u1153\u56FD.\u4E2D"]
 	var ipnummer = ["8.8.8.8","108.170.242.123","216.239.42.115","214.170.236.19","82.150.158.221"]
@@ -85,7 +84,7 @@ function animateTraceroute()
 	{
 		if(number < numberOfNodes)
 		{
-			number=number+addNumber
+			number ++;
 			$('#console').append("<br> ", number," ",dnsnames[number], " (",ipnummer[number], ") ", miliseconds.toFixed(3)," ms ",(miliseconds=miliseconds-changemiliseconds).toFixed(3)," ms ",(miliseconds=miliseconds-changemiliseconds).toFixed(3)," ms");
 			window.scrollTo(1, document.body.scrollHeight);
 			miliseconds = miliseconds*2
@@ -99,8 +98,26 @@ function animateTraceroute()
 	}, 1000);
 }
 
-function killNodes()
+function animateKillNodes()
 {
+	showHide('prompt', 'none');
+	var number = 0;
+	var numberOfNodes = 4;
+	var interval = setInterval(function()
+	{
+		if(number < numberOfNodes)
+		{
+			$('#console').append("<br> ", number);
+			window.scrollTo(1, document.body.scrollHeight);
+			number ++;
+		}
+		else
+		{
+			clearInterval(interval);
+			showHide('prompt', 'block');
+			getFocus();
+		}
+	}, 1000);
 	
 }
 
@@ -257,8 +274,8 @@ function validateCommand()
 	{	
 		if(commandInput.match(/^killnodes.sh (\d|[1-9]) (\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))$/))
 		{
-			previousInnerHTML = previousInnerHTML.concat("<br>",commandInput," (",commandInput.replace("traceroute","")," ), 64 hops max, 52 byte packets");
-			animateTraceroute();
+			previousInnerHTML = previousInnerHTML.concat("<br>starting killnodes.sh script");
+			animateKillNodes();
 		}
 		else
 		{
