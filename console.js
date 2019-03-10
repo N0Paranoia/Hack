@@ -2,14 +2,11 @@
 // - [x] Trace route en ping nog help bij niet meegeven ip
 // - [ ] Kill nodes script op basis van 3 ip
 // - [ ] nice to have = Logboek functionaliteit
-
-var Usrname = "root";
-var Passwd = "welkom";
-
 var state_user = 0;
 var state_password = 1;
 var state_command = 2;
 var current_state = state_user;
+var userInput = "";
 
 function onLoad()
 {
@@ -153,11 +150,9 @@ function validateAccount(state)
 	{
 		case state_user:
 			var previousInnerHTML = new String();
-			var userInput = document.getElementById("username").value;
-	
+			userInput = document.getElementById("username").value;
 			previousInnerHTML = document.getElementById('user').innerHTML;
-
-			if(userInput == Usrname)
+			if(userList.indexOf(userInput) >= 0)
 			{
 				var newUserInput = "su "+userInput;
 				changeUser(Users[newUserInput],'PassCurrentUser');
@@ -180,10 +175,8 @@ function validateAccount(state)
 		case state_password:
 			var previousInnerHTML = new String();
 			var pwInput = document.getElementById("password").value;
-
 			previousInnerHTML = document.getElementById('pass').innerHTML;
-    
-			if(pwInput.toLowerCase() == Passwd)
+			if(pwInput == passList[userList.indexOf(userInput)])
 			{
 				showHide('passinput', 'none');
 				showHide('terminal', 'block');
