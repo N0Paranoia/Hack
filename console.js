@@ -72,19 +72,30 @@ function animateTraceroute()
 	var commandInput = document.getElementById("command").value;
 	var number = 0;
 	var miliseconds = 15.533;
-	var changemiliseconds = 4.014
+	var lessmiliseconds = 4.014
+	var moremiliseconds = 5.108
 	var numberOfNodes = 4
-	var dnsnames = ["www.google.com","dw-vpnproxy.nl-ox.net","public-ix-net.bl-ix.net","tor.secure-net.co.uk","\u5895\u7468-\u4E2D\u4320.\u6381\u1153\u56FD.\u4E2D"]
-	var ipnummer = ["8.8.8.8","108.170.242.123","216.239.42.115","214.170.236.19","82.150.158.221"]
+	var dnsnames = ["localhost","dw-vpnproxy.nl-ox.net","public-ix-net.bl-ix.net","tor.secure-net.co.uk","\u5895\u7468-\u4E2D\u4320.\u6381\u1153\u56FD.\u4E2D"]
+	var ipnummer = ["127.0.0.1","108.170.242.123","216.239.42.115","214.170.236.19","82.150.158.221"]
 
 	var interval = setInterval(function()
 	{
 		if(number < numberOfNodes)
 		{
-			number ++;
-			$('#console').append("<br> ", number," ",dnsnames[number], " (",ipnummer[number], ") ", miliseconds.toFixed(3)," ms ",(miliseconds=miliseconds-changemiliseconds).toFixed(3)," ms ",(miliseconds=miliseconds-changemiliseconds).toFixed(3)," ms");
-			window.scrollTo(1, document.body.scrollHeight);
-			miliseconds = miliseconds*2
+			if(commandInput == "traceroute 127.0.0.1" || commandInput == "traceroute localhost")
+			{
+				number = numberOfNodes;
+				$('#console').append("<br> ", "1"," ",dnsnames[0], " (",ipnummer[0], ") ", miliseconds.toFixed(3)," ms ",(miliseconds=miliseconds-lessmiliseconds).toFixed(3)," ms ",(miliseconds=miliseconds-moremiliseconds).toFixed(3)," ms");
+				windxow.scrollTo(1, document.body.scrollHeight);
+				miliseconds = miliseconds*2
+			}
+			else
+			{
+				number ++;
+				$('#console').append("<br> ", number," ",dnsnames[number], " (",ipnummer[number], ") ", miliseconds.toFixed(3)," ms ",(miliseconds=miliseconds-moremiliseconds).toFixed(3)," ms ",(miliseconds=miliseconds-lessmiliseconds).toFixed(3)," ms");
+				windxow.scrollTo(1, document.body.scrollHeight);
+				miliseconds = miliseconds*2
+			}
 		}
 		else
 		{
@@ -246,6 +257,11 @@ function validateCommand()
 			previousInnerHTML = previousInnerHTML.concat("<br>",commandInput,"  - 56 bytes if data.");
 			animatePing();
 		}
+		else if(commandInput.match("ping localhost"))
+		{
+			previousInnerHTML = previousInnerHTML.concat("<br>","ping 127.0.0.1","  - 56 bytes if data.");
+			animatePing();
+		}
 		else
 		{
 			previousInnerHTML = previousInnerHTML.concat(output("ping", currentFolder()));
@@ -256,6 +272,11 @@ function validateCommand()
 		if(commandInput.match(/^traceroute (\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))$/))
 		{
 			previousInnerHTML = previousInnerHTML.concat("<br>",commandInput," (",commandInput.replace("traceroute","")," ), 64 hops max, 52 byte packets");
+			animateTraceroute();
+		}
+		else if(commandInput.match("traceroute localhost"))
+		{
+			previousInnerHTML = previousInnerHTML.concat("<br>",commandInput," ( ","127.0.0.1"," ), 64 hops max, 52 byte packets");
 			animateTraceroute();
 		}
 		else

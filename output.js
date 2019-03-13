@@ -23,8 +23,7 @@ function output(input, folder)
 						ls [OPTION] [FILE] ............ list directory contents<br>\
  						date .......................... print the system date and time<br>\
 						ping [remote host] ............ send ICMP ECHO_REQUEST to network hosts<br>\
-						traceroute [remote host]....... print the route packets take to package host<br>\
- 						vi [filename] ................. screen oriented (visual) display editor based on ex\
+						traceroute [remote host]....... print the route packets take to package host\
  					";
 			break;
 		case "info bash":
