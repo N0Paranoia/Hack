@@ -23,7 +23,8 @@ function output(input, folder)
 						ls [OPTION] [FILE] ............ list directory contents<br>\
  						date .......................... print the system date and time<br>\
 						ping [remote host] ............ send ICMP ECHO_REQUEST to network hosts<br>\
-						traceroute [remote host]....... print the route packets take to package host\
+						traceroute [remote host]....... print the route packets take to package host<br>\
+						clear ......................... clear the sceen\
  					";
 			break;
 		case "info bash":
@@ -95,9 +96,15 @@ function output(input, folder)
 					usage: killnodes.sh [number of nodes] [ip-address or DNS-name for all the noders]<br>\
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Exmample: killnodes.sh 2 123.123.123.123 213.213.213.213";
 			break;
+		case "clear":
+			return "screen cleared";
+			break;
+		case "wrong_folder":
+			return "<br> No such file or directory";
+			break;
 		case "":
 			return "";
-			break;			
+			break;		
 		default:
 			return "<br>" + input + ": command not found, type 'help' for a list of available commands";	
 			break;

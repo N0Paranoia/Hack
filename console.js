@@ -210,8 +210,8 @@ function currentFolder()
 
 function changeFolder(newFolder)
 {
-    current_folder = newFolder;
-    document.getElementById('CurrentFolder').innerHTML=current_folder;
+	current_folder = newFolder;
+	document.getElementById('CurrentFolder').innerHTML=current_folder;
 }
 
 function currentPrompt()
@@ -296,9 +296,18 @@ function validateCommand()
 			previousInnerHTML = previousInnerHTML.concat(output("killnodes.sh", currentFolder()));
 		}
 	}
+	else if(commandInput.match("clear"))
+	{
+		showHide('passinput', 'none');
+		showHide("pw", "none");
+		showHide("username", "none");
+		showHide("lastpass", "none");
+		previousInnerHTML = "";
+		previousInnerHTML = previousInnerHTML.concat(output(commandInput.toLowerCase(), currentFolder()));
+	}
 	else if(Folders[commandInput])
 	{
-        changeFolder(Folders[commandInput]);
+		changeFolder(Folders[commandInput])
 	}
 	else if(Users[commandInput])
 	{
