@@ -305,9 +305,18 @@ function validateCommand()
 		previousInnerHTML = "";
 		previousInnerHTML = previousInnerHTML.concat(output(commandInput.toLowerCase(), currentFolder()));
 	}
-	else if(Folders[commandInput])
+	// else if(Folders[commandInput])
+	else if(commandInput.match(/^cd/))
 	{
-		changeFolder(Folders[commandInput])
+		if(commandInput in Folders) 
+		{
+			changeFolder(Folders[commandInput])
+		}
+		else
+		{
+			previousInnerHTML = previousInnerHTML.concat(folderoutput(commandInput.toLowerCase(), currentFolder()));
+			console.log("wrong folder")
+		}
 	}
 	else if(Users[commandInput])
 	{

@@ -99,9 +99,6 @@ function output(input, folder)
 		case "clear":
 			return "screen cleared";
 			break;
-		case "wrong_folder":
-			return "<br> No such file or directory";
-			break;
 		case "":
 			return "";
 			break;		
@@ -110,4 +107,9 @@ function output(input, folder)
 			break;
 	}
 
+}
+
+function folderoutput(input, folder)
+{
+	return "<br>" + input + ": No such file or directory";
 }
