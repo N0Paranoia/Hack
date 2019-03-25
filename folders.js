@@ -1,7 +1,8 @@
 var current_folder = "/";
 
-var Folders = {
+var Folders_cd= {
     "cd" : "/",
+    "cd " : "/",
     "cd /" : "/",
     "cd .." : "/",
     "cd.." : "/",
@@ -10,4 +11,12 @@ var Folders = {
     "cd pictures" : "/pictures",
     "cd temp" : "/temp",
     "cd video" : "/video",
+}
+
+var Folders = {
+    "cd" : "/",
+    "cd " : "/",
+    "cd /" : "/",
+    "cd .." : "/",
+    "cd.." : "/",
 }

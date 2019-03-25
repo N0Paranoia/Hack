@@ -305,17 +305,32 @@ function validateCommand()
 		previousInnerHTML = "";
 		previousInnerHTML = previousInnerHTML.concat(output(commandInput.toLowerCase(), currentFolder()));
 	}
-	// else if(Folders[commandInput])
 	else if(commandInput.match(/^cd/))
 	{
-		if(commandInput in Folders) 
+		alert(currentFolder())
+		if(currentFolder() == "/")
 		{
-			changeFolder(Folders[commandInput])
+			if(commandInput in Folders_cd) 
+			{
+				changeFolder(Folders_cd[commandInput])
+			}
+			else
+			{
+				previousInnerHTML = previousInnerHTML.concat(folderoutput(commandInput.toLowerCase(), currentFolder()));
+				console.log("wrong folder")
+			}
 		}
 		else
 		{
-			previousInnerHTML = previousInnerHTML.concat(folderoutput(commandInput.toLowerCase(), currentFolder()));
-			console.log("wrong folder")
+			if(commandInput in Folders) 
+			{
+				changeFolder(Folders[commandInput])
+			}
+			else
+			{
+				previousInnerHTML = previousInnerHTML.concat(folderoutput(commandInput.toLowerCase(), currentFolder()));
+				console.log("wrong folder")
+			}	
 		}
 	}
 	else if(Users[commandInput])
