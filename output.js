@@ -99,6 +99,30 @@ function output(input, folder)
 		case "clear":
 			return "screen cleared";
 			break;
+		case "bug":
+			return "<br><br>\
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%%&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%%<br>\
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%%&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%%<br>\
+			&nbsp;&nbsp;&nbsp;&nbsp;%%&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%%<br>\
+			<br>\
+			<br>\
+			&nbsp;&nbsp;&nbsp;&nbsp;%%&nbsp;%%%%%%%%%%&nbsp;%%<br>\
+			&nbsp;&nbsp;&nbsp;&nbsp;%%%&nbsp;%%%%%%%%&nbsp;%%%<br>\
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%%%%%%%%%%%%%%<br>\
+			&nbsp;&nbsp;&nbsp;&nbsp;%%%%%%%%%%%%%%%%<br>\
+			&nbsp;&nbsp;&nbsp;&nbsp;%%%%%%%%%%%%%%%<br>\
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%%%%%%%%%%%%%<br>\
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%%%%%%%%%%%%%<br>\
+			<br>\
+			<br>\
+			&nbsp;&nbsp;%%%%%%%%%%%%%%%%%%%<br>\
+			<br>\
+			&nbsp;&nbsp;%%&nbsp;&nbsp;%%%%%%%%%%%%&nbsp;&nbsp;%%<br>\
+			&nbsp;&nbsp;%%&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%%%&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%%<br>\
+			&nbsp;&nbsp;&nbsp;%%&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%%<br>\
+			&nbsp;&nbsp;&nbsp;&nbsp;%%&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%%<br>\
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;F9N2PB";
+			break;
 		case "":
 			return "";
 			break;		

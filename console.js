@@ -1,7 +1,3 @@
-// TOOD
-// - [x] Trace route en ping nog help bij niet meegeven ip
-// - [ ] Kill nodes script op basis van 3 ip
-// - [ ] nice to have = Logboek functionaliteit
 var state_user = 0;
 var state_password = 1;
 var state_command = 2;
@@ -42,9 +38,31 @@ function changeState(new_state)
 	current_state = new_state;
 }
 
+function animateStartup()
+{
+	showHide('prompt', 'none');
+	var commandInput = document.getElementById("command").value;
+	var number = 0;
+	var start_proces = [' * setting clock',' * mounting filesystem',' * starting system logger',' * loading udev',' * default keymap (US)',' * setting hostname to GC846C0',' * checking filesystem',' * starting bridge socket',' * starting ACPI daemon',' * starting CPU interrupts balancing daemon',' * starting systemctl']
+	var interval = setInterval(function()
+	{
+		if(number < start_proces.length)
+		{
+			$('#console').append("<br>"+start_proces[number]+" ");
+			window.scrollTo(1, document.body.scrollHeight);
+			number ++;
+		}
+		else
+		{
+			clearInterval(interval);
+			showHide('prompt', 'block');
+			getFocus();
+		}
+	}, Math.floor(Math.random() * 6000) + 1 );
+}
+
 function animatePing()
 {
-	
 	showHide('prompt', 'none');
 	var commandInput = document.getElementById("command").value;
 	var number = 29.8;
@@ -296,6 +314,10 @@ function validateCommand()
 			previousInnerHTML = previousInnerHTML.concat(output("killnodes.sh", currentFolder()));
 		}
 	}
+	else if(commandInput.match("reboot"))
+	{
+		animateStartup();
+	}
 	else if(commandInput.match("clear"))
 	{
 		showHide('passinput', 'none');
@@ -307,7 +329,6 @@ function validateCommand()
 	}
 	else if(commandInput.match(/^cd/))
 	{
-		alert(currentFolder())
 		if(currentFolder() == "/")
 		{
 			if(commandInput in Folders_cd) 
@@ -317,7 +338,6 @@ function validateCommand()
 			else
 			{
 				previousInnerHTML = previousInnerHTML.concat(folderoutput(commandInput.toLowerCase(), currentFolder()));
-				console.log("wrong folder")
 			}
 		}
 		else
@@ -329,7 +349,6 @@ function validateCommand()
 			else
 			{
 				previousInnerHTML = previousInnerHTML.concat(folderoutput(commandInput.toLowerCase(), currentFolder()));
-				console.log("wrong folder")
 			}	
 		}
 	}
