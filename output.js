@@ -10,6 +10,9 @@ function output(input, folder)
 		case "exit":
 			location.reload();
 			break;
+		case "reboot":
+			location.reload();
+			break;
 		case "help":
 			return "\
     					<br>\

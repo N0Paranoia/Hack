@@ -1,14 +1,18 @@
+var state_starup = 3
 var state_user = 0;
 var state_password = 1;
 var state_command = 2;
 var current_state = state_user;
 var userInput = "";
+var current_prompt = '#';
 
 function onLoad()
 {
+	animateStartup();
+	showHide("usr", "none")
 	showHide("pw", "none");
 	showHide("terminal", "none");
-	getFocus("username");
+	getFocus();
 }
 
 function getFocus()
@@ -40,25 +44,28 @@ function changeState(new_state)
 
 function animateStartup()
 {
-	showHide('prompt', 'none');
-	var commandInput = document.getElementById("command").value;
+	// showHide('prompt', 'none');
 	var number = 0;
-	var start_proces = [' * setting clock',' * mounting filesystem',' * starting system logger',' * loading udev',' * default keymap (US)',' * setting hostname to GC846C0',' * checking filesystem',' * starting bridge socket',' * starting ACPI daemon',' * starting CPU interrupts balancing daemon',' * starting systemctl']
-	var interval = setInterval(function()
-	{
+	var myFunction = function() {
 		if(number < start_proces.length)
 		{
-			$('#console').append("<br>"+start_proces[number]+" ");
-			window.scrollTo(1, document.body.scrollHeight);
-			number ++;
+			if(number%2 == 0) {
+				$('#boot').append(`<br>${start_proces[number]}`);
+				setTimeout(myFunction, Math.floor((Math.random() * 1500 + 100)));
+			} else {
+				$('#boot').append(`${start_proces[number]}`);
+				setTimeout(myFunction, 500);
+			}
+			number++;
 		}
 		else
 		{
-			clearInterval(interval);
-			showHide('prompt', 'block');
+			showHide('boot', 'none');
+			showHide('usr', 'block');
 			getFocus();
 		}
-	}, Math.floor(Math.random() * 6000) + 1 );
+	}
+	setTimeout(myFunction, number);
 }
 
 function animatePing()
@@ -72,7 +79,7 @@ function animatePing()
 		if(number < 31.0)
 		{
 			number=number+addNumber
-			$('#console').append("<br> 64 bytes from ", commandInput.replace("ping", ""), ": ttl=53 time=", number.toFixed(1)," ms");
+			$('#console').append(`<br> 64 bytes from ${commandInput.replace("ping", "")} : ttl=53 time=${number.toFixed(1)} ms`);
 			window.scrollTo(1, document.body.scrollHeight);
 		}
 		else
@@ -197,7 +204,7 @@ function validateAccount(state)
 			}
 			else
 			{
-				previousInnerHTML = previousInnerHTML.concat("login as: ", userInput, "<br>", userInput, ": invalid username<br>");
+				previousInnerHTML = previousInnerHTML.concat(`login as: ${userInput}<br>${userInput} : invalid username<br>`);
 			}
 			document.getElementById('user').innerHTML = previousInnerHTML;
 			break;
@@ -214,7 +221,7 @@ function validateAccount(state)
 			}
 			else
 			{
-				previousInnerHTML = previousInnerHTML.concat(currentUser()+"@hGC846C0's password:<br>Acces denied: invalid password<br>");
+				previousInnerHTML = previousInnerHTML.concat(`${currentUser()}@hGC846C0's password:<br>Acces denied: invalid password<br>`);
 			}
 			document.getElementById('pass').innerHTML = previousInnerHTML;
 			break;
@@ -266,18 +273,18 @@ function validateCommand()
 	var previousInnerHTML = new String();
 	var commandInput = document.getElementById("command").value;
 	previousInnerHTML = document.getElementById('console').innerHTML;
-	previousInnerHTML = previousInnerHTML.concat("<br>[",current_user,"@GC846C0 ", current_folder, "]# ", commandInput);
+	previousInnerHTML = previousInnerHTML.concat(`<br>[${current_user}@GC846C0 ${current_folder}]# ${commandInput}`);
 
 	if(commandInput.match(/^ping/))
 	{
 		if(commandInput.match(/^ping (\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))$/))
 		{
-			previousInnerHTML = previousInnerHTML.concat("<br>",commandInput,"  - 56 bytes if data.");
+			previousInnerHTML = previousInnerHTML.concat(`<br>${commandInput} - 56 bytes if data.`);
 			animatePing();
 		}
 		else if(commandInput.match("ping localhost"))
 		{
-			previousInnerHTML = previousInnerHTML.concat("<br>","ping 127.0.0.1","  - 56 bytes if data.");
+			previousInnerHTML = previousInnerHTML.concat("<br>ping 127.0.0.1 - 56 bytes if data.");
 			animatePing();
 		}
 		else
@@ -289,12 +296,12 @@ function validateCommand()
 	{
 		if(commandInput.match(/^traceroute (\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))$/))
 		{
-			previousInnerHTML = previousInnerHTML.concat("<br>",commandInput," (",commandInput.replace("traceroute","")," ), 64 hops max, 52 byte packets");
+			previousInnerHTML = previousInnerHTML.concat(`<br>${commandInput} ( ${commandInput.replace("traceroute","")} ), 64 hops max, 52 byte packets`);
 			animateTraceroute();
 		}
 		else if(commandInput.match("traceroute localhost"))
 		{
-			previousInnerHTML = previousInnerHTML.concat("<br>",commandInput," ( ","127.0.0.1"," ), 64 hops max, 52 byte packets");
+			previousInnerHTML = previousInnerHTML.concat(`<br>${commandInput} ( 127.0.0.1 ), 64 hops max, 52 byte packets`);
 			animateTraceroute();
 		}
 		else
@@ -314,10 +321,10 @@ function validateCommand()
 			previousInnerHTML = previousInnerHTML.concat(output("killnodes.sh", currentFolder()));
 		}
 	}
-	else if(commandInput.match("reboot"))
-	{
-		animateStartup();
-	}
+	// else if(commandInput.match("reboot"))
+	// {
+	// 	animateStartup();
+	// }
 	else if(commandInput.match("clear"))
 	{
 		showHide('passinput', 'none');
@@ -355,6 +362,10 @@ function validateCommand()
 	else if(Users[commandInput])
 	{
 		changeUser(Users[commandInput]);
+	}
+	else if(commandInput.match("test"))
+	{
+		test();
 	}
 	else
 	{
