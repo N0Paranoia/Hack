@@ -28,6 +28,7 @@ function output(input, folder)
 						ping [remote host] ............ send ICMP ECHO_REQUEST to network hosts<br>\
 						traceroute [remote host]....... print the route packets take to package host<br>\
 						clear ......................... clear the sceen\
+						reboot......................... reboot the system\
  					";
 			break;
 		case "info bash":
@@ -56,7 +57,8 @@ function output(input, folder)
                 case "/":
                     var str = "Test string";
                     return "\
-                            <br>\
+							<br>\
+							drwxr-xr-x&nbsp;&nbsp1&nbsp;&nbsp;noparanoia&nbsp;&nbsp;&nbsp;&nbsp;users&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1 01.07.1981 20:30 ./<br>\
                             drwxr-xr-x&nbsp;&nbsp1&nbsp;&nbsp;noparanoia&nbsp;&nbsp;&nbsp;&nbsp;users&nbsp;&nbsp;&nbsp;&nbsp;4096 01.07.1981 20:30 documents/<br>\
                             drwxr-xr-x&nbsp;&nbsp1&nbsp;&nbsp;noparanoia&nbsp;&nbsp;&nbsp;&nbsp;users&nbsp;&nbsp;&nbsp;&nbsp;4096 01.07.1981 20:30 files/<br>\
                             drwxr-xr-x&nbsp;&nbsp1&nbsp;&nbsp;noparanoia&nbsp;&nbsp;&nbsp;&nbsp;users&nbsp;&nbsp;&nbsp;&nbsp;4096 01.07.1981 20:30 pictures<br>\
@@ -70,7 +72,13 @@ function output(input, folder)
                     return "\
                             <br>\
                             drwxr-xr-x&nbsp;&nbsp1&nbsp;&nbsp;noparanoia&nbsp;&nbsp;&nbsp;&nbsp;users&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2 01.07.1981 20:30 " + "<a href='http://noparanoia.4ourty2.org/files/gvim74.exe'>gvim74.exe</a>";
-                    break;
+					break;
+				default:
+					return "\
+						<br>\
+						drwxr-xr-x&nbsp;&nbsp1&nbsp;&nbsp;noparanoia&nbsp;&nbsp;&nbsp;&nbsp;users&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1 01.07.1981 20:30 ./"
+						break;
+
             }
         case "cat mumble.txt":
             switch(folder)
@@ -79,7 +87,9 @@ function output(input, folder)
                     return "\
                         <br>test\
                     ";
-                    break;
+					break;
+				default:
+					return " ";
 			}
 		case "ping":
 			return "\
