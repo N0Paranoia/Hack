@@ -5,14 +5,18 @@ var state_command = 2;
 var current_state = state_user;
 var userInput = "";
 var current_prompt = '#';
+var debug = true
 
 function onLoad()
 {
-	animateStartup();
-	showHide("usr", "none")
-	showHide("pw", "none");
-	showHide("terminal", "none");
-	getFocus();
+	if(!debug)
+	{
+		animateStartup();
+		showHide("usr", "none")
+		showHide("pw", "none");
+		showHide("terminal", "none");
+		getFocus();
+	}
 }
 
 function getFocus()
@@ -44,17 +48,16 @@ function changeState(new_state)
 
 function animateStartup()
 {
-	// showHide('prompt', 'none');
 	var number = 0;
 	var myFunction = function() {
 		if(number < start_proces.length)
 		{
 			if(number%2 == 0) {
 				$('#boot').append(`<br>${start_proces[number]}`);
-				setTimeout(myFunction, Math.floor((Math.random() * 1500 + 100)));
+				setTimeout(myFunction, Math.floor((Math.random() * 1500) + 100));
 			} else {
 				$('#boot').append(`${start_proces[number]}`);
-				setTimeout(myFunction, 500);
+				setTimeout(myFunction, 100);
 			}
 			number++;
 		}
@@ -72,15 +75,14 @@ function animatePing()
 {
 	showHide('prompt', 'none');
 	var commandInput = document.getElementById("command").value;
-	var number = 29.8;
-	var addNumber = 0.3;
+	var number = 0;;
 	var interval = setInterval(function()
 	{
-		if(number < 31.0)
+		if(number < 4)
 		{
-			number=number+addNumber
-			$('#console').append(`<br> 64 bytes from ${commandInput.replace("ping", "")} : ttl=53 time=${number.toFixed(1)} ms`);
+			$('#console').append(`<br> 64 bytes from ${commandInput.replace("ping", "")} : ttl=53 time=${(Math.floor(Math.random() * 6) + 1)}.${(Math.floor(Math.random() * 900) + 100)} ms`);
 			window.scrollTo(1, document.body.scrollHeight);
+			number ++;
 		}
 		else
 		{
@@ -96,9 +98,6 @@ function animateTraceroute()
 	showHide('prompt', 'none');
 	var commandInput = document.getElementById("command").value;
 	var number = 0;
-	var miliseconds = 15.533;
-	var lessmiliseconds = 4.014
-	var moremiliseconds = 5.108
 	var numberOfNodes = 4
 	var dnsnames = ["localhost","dw-vpnproxy.nl-ox.net","public-ix-net.bl-ix.net","tor.secure-net.co.uk","\u5895\u7468-\u4E2D\u4320.\u6381\u1153\u56FD.\u4E2D"]
 	var ipnummer = ["127.0.0.1","108.170.242.123","216.239.42.115","214.170.236.19","82.150.158.221"]
@@ -110,16 +109,14 @@ function animateTraceroute()
 			if(commandInput == "traceroute 127.0.0.1" || commandInput == "traceroute localhost")
 			{
 				number = numberOfNodes;
-				$('#console').append("<br> ", "1"," ",dnsnames[0], " (",ipnummer[0], ") ", miliseconds.toFixed(3)," ms ",(miliseconds=miliseconds-lessmiliseconds).toFixed(3)," ms ",(miliseconds=miliseconds-moremiliseconds).toFixed(3)," ms");
+				$('#console').append(`<br>1 ${dnsnames[0]} ( ${ipnummer[0]} )  ${(Math.floor(Math.random() * 6) + 1)}.${(Math.floor(Math.random() * 900) + 100)} ms  ${(Math.floor(Math.random() * 6) + 1)}.${(Math.floor(Math.random() * 900) + 100)} ms  ${(Math.floor(Math.random() * 6) + 1)}.${(Math.floor(Math.random() * 900) + 100)} ms`);
 				windxow.scrollTo(1, document.body.scrollHeight);
-				miliseconds = miliseconds*2
 			}
 			else
 			{
 				number ++;
-				$('#console').append("<br> ", number," ",dnsnames[number], " (",ipnummer[number], ") ", miliseconds.toFixed(3)," ms ",(miliseconds=miliseconds-moremiliseconds).toFixed(3)," ms ",(miliseconds=miliseconds-lessmiliseconds).toFixed(3)," ms");
+				$('#console').append(`<br>${number} ${dnsnames[number]} ( ${ipnummer[number]} )  ${(Math.floor(Math.random() * 6) + 1)}.${(Math.floor(Math.random() * 900) + 100)} ms  ${(Math.floor(Math.random() * 6) + 1)}.${(Math.floor(Math.random() * 900) + 100)} ms  ${(Math.floor(Math.random() * 6) + 1)}.${(Math.floor(Math.random() * 900) + 100)} ms`);
 				windxow.scrollTo(1, document.body.scrollHeight);
-				miliseconds = miliseconds*2
 			}
 		}
 		else
@@ -134,15 +131,16 @@ function animateTraceroute()
 function animateKillNodes()
 {
 	showHide('prompt', 'none');
+	var commandInput = document.getElementById("command").value;
 	var number = 0;
-	var numberOfNodes = 4;
+	var numberOfNodes = commandInput.split(" ")[1]
 	var interval = setInterval(function()
 	{
 		if(number < numberOfNodes)
 		{
-			$('#console').append("<br> ", number);
-			window.scrollTo(1, document.body.scrollHeight);
 			number ++;
+			$('#console').append(`<br>killing node ${number} ${commandInput.split(" ")[1+number]}`)
+			windxow.scrollTo(1, document.body.scrollHeight);
 		}
 		else
 		{
@@ -151,7 +149,6 @@ function animateKillNodes()
 			getFocus();
 		}
 	}, 1000);
-	
 }
 
 function submit(id, event)
@@ -282,7 +279,7 @@ function validateCommand()
 			previousInnerHTML = previousInnerHTML.concat(`<br>${commandInput} - 56 bytes if data.`);
 			animatePing();
 		}
-		else if(commandInput.match("ping localhost"))
+		else if(commandInput.match("\^ping localhost\$"))
 		{
 			previousInnerHTML = previousInnerHTML.concat("<br>ping 127.0.0.1 - 56 bytes if data.");
 			animatePing();
@@ -299,7 +296,7 @@ function validateCommand()
 			previousInnerHTML = previousInnerHTML.concat(`<br>${commandInput} ( ${commandInput.replace("traceroute","")} ), 64 hops max, 52 byte packets`);
 			animateTraceroute();
 		}
-		else if(commandInput.match("traceroute localhost"))
+		else if(commandInput.match("\^traceroute localhost\$"))
 		{
 			previousInnerHTML = previousInnerHTML.concat(`<br>${commandInput} ( 127.0.0.1 ), 64 hops max, 52 byte packets`);
 			animateTraceroute();
@@ -309,23 +306,41 @@ function validateCommand()
 			previousInnerHTML = previousInnerHTML.concat(output("traceroute", currentFolder()));
 		}
 	}
-	else if(commandInput.match(/^killnodes.sh/)) 
+	else if(commandInput.match(/^killnodes.sh/))
 	{	
-		if(commandInput.match(/^killnodes.sh (\d|[1-9]) (\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))$/))
+		if(commandInput.match(/^killnodes.sh 1 (\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))$/))
+		{
+			previousInnerHTML = previousInnerHTML.concat("<br>starting killnodes.sh script");
+			animateKillNodes();
+		}
+		else if(commandInput.match(/^killnodes.sh 2 (\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5])) (\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))$/))
+		{
+			previousInnerHTML = previousInnerHTML.concat("<br>starting killnodes.sh script");
+			animateKillNodes();
+		}
+		else if(commandInput.match(/^killnodes.sh 3 (\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5])) (\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5])) (\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))$/))
+		{
+			previousInnerHTML = previousInnerHTML.concat("<br>starting killnodes.sh script");
+			animateKillNodes();
+		}
+		else if(commandInput.match(/^killnodes.sh 3 (\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5])) (\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5])) (\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5])) (\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))$/))
 		{
 			previousInnerHTML = previousInnerHTML.concat("<br>starting killnodes.sh script");
 			animateKillNodes();
 		}
 		else
 		{
-			previousInnerHTML = previousInnerHTML.concat(output("killnodes.sh", currentFolder()));
+			if(commandInput.split(" ")[1] != (commandInput.split(" ").length -2))
+			{
+				previousInnerHTML = previousInnerHTML.concat(output("killnodes.sh_wrong", currentFolder()));
+			}
+			else
+			{
+				previousInnerHTML = previousInnerHTML.concat(output("killnodes.sh", currentFolder()));
+			}
 		}
 	}
-	// else if(commandInput.match("reboot"))
-	// {
-	// 	animateStartup();
-	// }
-	else if(commandInput.match("clear"))
+	else if(commandInput.match("\^clear\$"))
 	{
 		showHide('passinput', 'none');
 		showHide("pw", "none");

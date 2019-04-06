@@ -106,8 +106,13 @@ function output(input, folder)
 		case "killnodes.sh":
 			return "\
 					<br>\
-					usage: killnodes.sh [number of nodes] [ip-address or DNS-name for all the noders]<br>\
+					usage: killnodes.sh [number of nodes (MAX IS 4 NODES)] [ip-address or DNS-name for all the noders]<br>\
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Exmample: killnodes.sh 2 123.123.123.123 213.213.213.213";
+			break;
+		case "killnodes.sh_wrong":
+			return "\
+					<br>\
+					Number of nodes nog matching numbewr of given ip adresses";
 			break;
 		case "clear":
 			return "screen cleared";
@@ -134,7 +139,8 @@ function output(input, folder)
 			&nbsp;&nbsp;%%&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%%%&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%%<br>\
 			&nbsp;&nbsp;&nbsp;%%&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%%<br>\
 			&nbsp;&nbsp;&nbsp;&nbsp;%%&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%%<br>\
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;F9N2PB";
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;F9N2PB<br>\
+			&nbsp;";
 			break;
 		case "":
 			return "";
