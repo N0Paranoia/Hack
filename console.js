@@ -5,7 +5,7 @@ var state_command = 2;
 var current_state = state_user;
 var userInput = "";
 var current_prompt = '#';
-var debug = true
+var debug = false
 
 function onLoad()
 {
