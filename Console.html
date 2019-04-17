@@ -2,11 +2,8 @@
 	<head>
 		<link type="text/css" href="terminal.css" rel="stylesheet" />
 		<script src="jquery-1.11.3.min.js" type="text/javascript"></script>
-		<script src="folders.js" type="text/javascript"></script>
-		<script src="users.js" type="text/javascript"></script>
 		<script src="output.js" type="text/javascript"></script>
 		<script src="console.js" type="text/javascript"></script>
-		<script src="boot.js" type="text/javascript"></script>
 	</head>
 	<body onload="onLoad()">
 		<div class="boot" id="boot">
@@ -17,7 +14,7 @@
 				<!-- for the previous commands -->
 			</div>
 			<div class="input" id="userinput">
-				login as: 
+				login as:
 				<input id="username" type="text" autocomplete="off" onBlur="getFocus()" onkeydown="submit(username, arguments[0] || window.event)" />
 				<input id="cancel_autocomplete_usr" type="text" style="display:none" />
 			</div>

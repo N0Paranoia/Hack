@@ -27,10 +27,7 @@ input, .input
     font-family: Lucida Console, Monaco, monospace;
     color: #00EE00;
     font-size: 12px;
-    line-height: 160%;
-    /* moet weg */
-    /* border: 1px green solid; */
-    
+    line-height: 160%;    
 }
 
 iframe 
