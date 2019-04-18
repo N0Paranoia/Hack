@@ -5,7 +5,7 @@ var state_command = 2;
 var current_state = state_user;
 var userInput = "";
 var current_prompt = '#';
-var debug = false
+var debug = true
 
 function onLoad() {
 	if (!debug) {
@@ -71,9 +71,16 @@ function animatePing() {
 	var number = 0;;
 	var interval = setInterval(function () {
 		if (number < 4) {
-			$('#console').append(`<br> 64 bytes from ${commandInput.replace("ping", "")} : ttl=53 time=${(Math.floor(Math.random() * 6) + 1)}.${(Math.floor(Math.random() * 900) + 100)} ms`);
-			window.scrollTo(1, document.body.scrollHeight);
-			number++;
+			if(ipnummer.indexOf(commandInput.replace("ping ", "")) !=-1) {
+				$('#console').append(`<br> 64 bytes from ${commandInput.replace("ping", "")} : ttl=53 time=${(Math.floor(Math.random() * 6) + 1)}.${(Math.floor(Math.random() * 900) + 100)} ms`);
+				window.scrollTo(1, document.body.scrollHeight);
+				number++;
+			}
+			else {
+				$('#console').append(`<br>Request timeout for icmp_seq ${number}`);
+				window.scrollTo(1, document.body.scrollHeight);
+				number++;
+			}
 		}
 		else {
 			clearInterval(interval);
@@ -87,9 +94,8 @@ function animateTraceroute() {
 	showHide('prompt', 'none');
 	var commandInput = document.getElementById("command").value;
 	var number = 0;
+	var number2 = 0;
 	var numberOfNodes = 4
-	var dnsnames = ["localhost", "dw-vpnproxy.nl-ox.net", "public-ix-net.bl-ix.net", "tor.secure-net.co.uk", "\u5895\u7468-\u4E2D\u4320.\u6381\u1153\u56FD.\u4E2D"]
-	var ipnummer = ["127.0.0.1", "108.170.242.123", "216.239.42.115", "214.170.236.19", "82.150.158.221"]
 
 	var interval = setInterval(function () {
 		if (number < numberOfNodes) {
@@ -98,10 +104,24 @@ function animateTraceroute() {
 				$('#console').append(`<br>1 ${dnsnames[0]} ( ${ipnummer[0]} )  ${(Math.floor(Math.random() * 6) + 1)}.${(Math.floor(Math.random() * 900) + 100)} ms  ${(Math.floor(Math.random() * 6) + 1)}.${(Math.floor(Math.random() * 900) + 100)} ms  ${(Math.floor(Math.random() * 6) + 1)}.${(Math.floor(Math.random() * 900) + 100)} ms`);
 				windxow.scrollTo(1, document.body.scrollHeight);
 			}
-			else {
+			else if (commandInput == "traceroute 63.251.163.200") {
 				number++;
 				$('#console').append(`<br>${number} ${dnsnames[number]} ( ${ipnummer[number]} )  ${(Math.floor(Math.random() * 6) + 1)}.${(Math.floor(Math.random() * 900) + 100)} ms  ${(Math.floor(Math.random() * 6) + 1)}.${(Math.floor(Math.random() * 900) + 100)} ms  ${(Math.floor(Math.random() * 6) + 1)}.${(Math.floor(Math.random() * 900) + 100)} ms`);
 				windxow.scrollTo(1, document.body.scrollHeight);
+			}
+			else {
+				if (number2 == 0) {
+					$('#console').append(`<br>${number+1}&nbsp;&nbsp;`);
+					number2++;
+				}
+				else if (number2 < 4) {
+					number2++;
+					$('#console').append(` *`);
+				}
+				else {
+					number++;
+					number2 = 0;
+				}
 			}
 		}
 		else {
@@ -172,6 +192,30 @@ function animateKillNodes() {
 				window.scrollTo(1, document.body.scrollHeight);
 				setTimeout(myFunction, Math.floor((Math.random() * 1500) + 100));
 			}
+		}
+		else {
+			showHide('prompt', 'block');
+			getFocus();
+		}
+	}
+	setTimeout(myFunction, number);
+}
+
+function animateSelfDestruct() {
+	showHide('prompt', 'none');
+	var number = 0;
+	var number2 = 0;
+	var myFunction = function () {
+		if (number < randon_ascii1.length) {
+			$('#console').append(`<br>${randon_ascii1[number]}`);
+			window.scrollTo(1, document.body.scrollHeight);
+			setTimeout(myFunction, (100 -(number*10)));
+			number++;
+		} else if (number2 < randon_ascii2.length) {
+			$('#console').append(`<br>${randon_ascii2[number2]}`);
+			window.scrollTo(1, document.body.scrollHeight);
+			setTimeout(myFunction, 5000);
+			number2++;
 		}
 		else {
 			showHide('prompt', 'block');
@@ -369,11 +413,11 @@ function validateCommand() {
 		changeUser(Users[commandInput]);
 	}
 	else if (commandInput.match("test")) {
-		test();
+		animateSelfDestruct();
 	}
 	else {
 		previousInnerHTML = previousInnerHTML.concat(output(commandInput.toLowerCase(), currentFolder()));
 	}
 	document.getElementById('console').innerHTML = previousInnerHTML;
-	window.scrollTo(0,document.body.scrollHeight);
+	window.scrollTo(0, document.body.scrollHeight);
 }

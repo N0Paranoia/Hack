@@ -21,12 +21,14 @@ var start_proces = ["Setting&nbsp;preliminary&nbsp;keymap.&nbsp;&nbsp;&nbsp;&nbs
 	"[OK]", "Starting&nbsp;service&nbsp;mountnfs&nbsp;in&nbsp;background.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
 	"[OK]", "Setting&nbsp;up&nbsp;console&nbsp;font&nbsp;and&nbsp;keymap.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
 	"[OK]", "Starting&nbsp;system&nbsp;logger.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
-	"[OK]"]
+	"[OK]"];
 
-var nodes_to_kill = ["is given the kill command!"," ","accessibility check...","OK","execute kill command..."," ","checking status"," ","status is...","TERMINATED"]
+var nodes_to_kill = ["is given the kill command!"," ","accessibility check...","OK","execute kill command..."," ","checking status"," ","status is...","TERMINATED"];
 
-var bug_tracker = ["starting bug tracking sequence","updating bug library","searching",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".","."]
+var bug_tracker = ["starting bug tracking sequence","updating bug library","searching",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".","."];
 
+var dnsnames = ["localhost", "dw-vpnproxy.nl-ox.net","tor.secure-net.co.uk","\u5895\u7468-\u4E2D\u4320.\u6381\u1153\u56FD.\u4E2D","public-ix-net.bl-ix.net"];
+var ipnummer = ["127.0.0.1", "108.170.242.123", "216.239.42.115", "214.170.236.19", "63.251.163.200"];
 
 var current_folder = "/";
 
@@ -41,7 +43,7 @@ var Folders_cd = {
 	"cd pictures": "/pictures",
 	"cd temp": "/temp",
 	"cd video": "/video",
-}
+};
 
 var Folders = {
 	"cd": "/",
@@ -54,7 +56,7 @@ var Folders = {
 	"cd ../pictures": "/pictures",
 	"cd ../temp": "/temp",
 	"cd ../video": "/video",
-}
+};
 
 var Users = [];
 var userList = ["guest", "root", "N0S!gn@l"]
