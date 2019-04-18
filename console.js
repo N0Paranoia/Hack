@@ -5,7 +5,7 @@ var state_command = 2;
 var current_state = state_user;
 var userInput = "";
 var current_prompt = '#';
-var debug = false
+var debug = false;
 
 function onLoad() {
 	if (!debug) {
@@ -95,8 +95,8 @@ function animateTraceroute() {
 	var commandInput = document.getElementById("command").value;
 	var number = 0;
 	var number2 = 0;
-	var numberOfNodes = 4
-
+	var numberOfNodes = ipnummer.indexOf(commandInput.replace("traceroute ", "")) > 0 ? ipnummer.indexOf(commandInput.replace("traceroute ", "")) : 4;
+	window.alert(numberOfNodes);
 	var interval = setInterval(function () {
 		if (number < numberOfNodes) {
 			if (commandInput == "traceroute 127.0.0.1" || commandInput == "traceroute localhost") {
@@ -104,7 +104,7 @@ function animateTraceroute() {
 				$('#console').append(`<br>1 ${dnsnames[0]} ( ${ipnummer[0]} )  ${(Math.floor(Math.random() * 6) + 1)}.${(Math.floor(Math.random() * 900) + 100)} ms  ${(Math.floor(Math.random() * 6) + 1)}.${(Math.floor(Math.random() * 900) + 100)} ms  ${(Math.floor(Math.random() * 6) + 1)}.${(Math.floor(Math.random() * 900) + 100)} ms`);
 				windxow.scrollTo(1, document.body.scrollHeight);
 			}
-			else if (commandInput == "traceroute 63.251.163.200") {
+			else if (ipnummer.indexOf(commandInput.replace("traceroute ", ""))!=-1) {
 				number++;
 				$('#console').append(`<br>${number} ${dnsnames[number]} ( ${ipnummer[number]} )  ${(Math.floor(Math.random() * 6) + 1)}.${(Math.floor(Math.random() * 900) + 100)} ms  ${(Math.floor(Math.random() * 6) + 1)}.${(Math.floor(Math.random() * 900) + 100)} ms  ${(Math.floor(Math.random() * 6) + 1)}.${(Math.floor(Math.random() * 900) + 100)} ms`);
 				windxow.scrollTo(1, document.body.scrollHeight);
