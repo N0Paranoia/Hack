@@ -8,26 +8,32 @@
 
 body 
 {
-    background-color: #001100;
-    font-family: Lucida Console, Monaco, monospace;
-    color: #00EE00;
-    font-size: 12px;
-
+  background-color: #001100;
+  font-family: Lucida Console, Monaco, monospace;
+  color: #00EE00;
+  font-size: 12px;
 }
 
 input, .input
 {
-    background-color: #001100;
-    white-space:nowrap;
-    width: 80%;
-    border: none;
-    padding: 0px;
-    outline: none;
-    margin: 0px;
-    font-family: Lucida Console, Monaco, monospace;
-    color: #00EE00;
-    font-size: 12px;
-    line-height: 160%;    
+  background-color: #001100;
+  white-space:nowrap;
+  width: 100%;
+  border: none;
+  padding: 0px;
+  outline: none;
+  margin: 0px;
+  font-family: Lucida Console, Monaco, monospace;
+  color: #00EE00;
+  font-size: 12px;
+  line-height: 160%;    
+}
+
+#console
+{
+  width: 100%;
+  word-break: break-all;
+  white-space: normal;
 }
 
 iframe 

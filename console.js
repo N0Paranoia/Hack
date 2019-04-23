@@ -71,7 +71,7 @@ function animatePing() {
 	var number = 0;;
 	var interval = setInterval(function () {
 		if (number < 4) {
-			if(ipnummer.indexOf(commandInput.replace("ping ", "")) !=-1) {
+			if (ipnummer.indexOf(commandInput.replace("ping ", "")) != -1) {
 				$('#console').append(`<br> 64 bytes from ${commandInput.replace("ping", "")} : ttl=53 time=${(Math.floor(Math.random() * 6) + 1)}.${(Math.floor(Math.random() * 900) + 100)} ms`);
 				window.scrollTo(1, document.body.scrollHeight);
 				number++;
@@ -96,7 +96,6 @@ function animateTraceroute() {
 	var number = 0;
 	var number2 = 0;
 	var numberOfNodes = ipnummer.indexOf(commandInput.replace("traceroute ", "")) > 0 ? ipnummer.indexOf(commandInput.replace("traceroute ", "")) : 4;
-	window.alert(numberOfNodes);
 	var interval = setInterval(function () {
 		if (number < numberOfNodes) {
 			if (commandInput == "traceroute 127.0.0.1" || commandInput == "traceroute localhost") {
@@ -104,14 +103,14 @@ function animateTraceroute() {
 				$('#console').append(`<br>1 ${dnsnames[0]} ( ${ipnummer[0]} )  ${(Math.floor(Math.random() * 6) + 1)}.${(Math.floor(Math.random() * 900) + 100)} ms  ${(Math.floor(Math.random() * 6) + 1)}.${(Math.floor(Math.random() * 900) + 100)} ms  ${(Math.floor(Math.random() * 6) + 1)}.${(Math.floor(Math.random() * 900) + 100)} ms`);
 				windxow.scrollTo(1, document.body.scrollHeight);
 			}
-			else if (ipnummer.indexOf(commandInput.replace("traceroute ", ""))!=-1) {
+			else if (ipnummer.indexOf(commandInput.replace("traceroute ", "")) != -1) {
 				number++;
 				$('#console').append(`<br>${number} ${dnsnames[number]} ( ${ipnummer[number]} )  ${(Math.floor(Math.random() * 6) + 1)}.${(Math.floor(Math.random() * 900) + 100)} ms  ${(Math.floor(Math.random() * 6) + 1)}.${(Math.floor(Math.random() * 900) + 100)} ms  ${(Math.floor(Math.random() * 6) + 1)}.${(Math.floor(Math.random() * 900) + 100)} ms`);
 				windxow.scrollTo(1, document.body.scrollHeight);
 			}
 			else {
 				if (number2 == 0) {
-					$('#console').append(`<br>${number+1}&nbsp;&nbsp;`);
+					$('#console').append(`<br>${number + 1}&nbsp;&nbsp;`);
 					number2++;
 				}
 				else if (number2 < 4) {
@@ -137,11 +136,12 @@ function animateBugTracker() {
 	var number = 0;
 	var myFunction = function () {
 		if (number < bug_tracker.length) {
-			if (number < 3) {
+			if (number < 3 || number > 65) {
 				$('#console').append(`<br>${bug_tracker[number]}`);
 				window.scrollTo(1, document.body.scrollHeight);
 				setTimeout(myFunction, Math.floor((Math.random() * 2500) + 1000));
-			} else {
+			}
+			else {
 				$('#console').append(`${bug_tracker[number]}`);
 				window.scrollTo(1, document.body.scrollHeight);
 				setTimeout(myFunction, Math.floor((Math.random() * 1000) + 100));
@@ -209,7 +209,7 @@ function animateSelfDestruct() {
 		if (number < randon_ascii1.length) {
 			$('#console').append(`<br>${randon_ascii1[number]}`);
 			window.scrollTo(1, document.body.scrollHeight);
-			setTimeout(myFunction, (100 -(number*10)));
+			setTimeout(myFunction, (100 - (number * 10)));
 			number++;
 		} else if (number2 < randon_ascii2.length) {
 			$('#console').append(`<br>${randon_ascii2[number2]}`);
@@ -328,7 +328,7 @@ function validateCommand() {
 	previousInnerHTML = document.getElementById('console').innerHTML;
 	previousInnerHTML = previousInnerHTML.concat(`<br>[${current_user}@GC846C0 ${current_folder}]# ${commandInput}`);
 
-	if (commandInput.match(/^ping/)) {
+	if (commandInput.toLowerCase().match(/^ping/)) {
 		if (commandInput.match(/^ping (\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))$/)) {
 			previousInnerHTML = previousInnerHTML.concat(`<br>${commandInput} - 56 bytes if data.`);
 			animatePing();
@@ -341,7 +341,7 @@ function validateCommand() {
 			previousInnerHTML = previousInnerHTML.concat(output("ping", currentFolder()));
 		}
 	}
-	else if (commandInput.match(/^traceroute/)) {
+	else if (commandInput.toLowerCase().match(/^traceroute/)) {
 		if (commandInput.match(/^traceroute (\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))$/)) {
 			previousInnerHTML = previousInnerHTML.concat(`<br>${commandInput} ( ${commandInput.replace("traceroute", "")} ), 64 hops max, 52 byte packets`);
 			animateTraceroute();
@@ -354,7 +354,7 @@ function validateCommand() {
 			previousInnerHTML = previousInnerHTML.concat(output("traceroute", currentFolder()));
 		}
 	}
-	else if (commandInput.match(/^killnodes.sh/)) {
+	else if (commandInput.toLowerCase().match(/^killnodes.sh/)) {
 		if (commandInput.match(/^killnodes.sh 1 (\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))$/)) {
 			previousInnerHTML = previousInnerHTML.concat("<br>starting killnodes.sh script");
 			animateKillNodes();
@@ -367,7 +367,7 @@ function validateCommand() {
 			previousInnerHTML = previousInnerHTML.concat("<br>starting killnodes.sh script");
 			animateKillNodes();
 		}
-		else if (commandInput.match(/^killnodes.sh 3 (\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5])) (\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5])) (\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5])) (\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))$/)) {
+		else if (commandInput.match(/^killnodes.sh 4 (\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5])) (\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5])) (\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5])) (\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))$/)) {
 			previousInnerHTML = previousInnerHTML.concat("<br>starting killnodes.sh script");
 			animateKillNodes();
 		}
@@ -380,7 +380,7 @@ function validateCommand() {
 			}
 		}
 	}
-	else if (commandInput.match("\^clear\$")) {
+	else if (commandInput.toLowerCase().match("\^clear\$")) {
 		showHide('passinput', 'none');
 		showHide("pw", "none");
 		showHide("username", "none");
@@ -388,7 +388,7 @@ function validateCommand() {
 		previousInnerHTML = "";
 		previousInnerHTML = previousInnerHTML.concat(output(commandInput.toLowerCase(), currentFolder()));
 	}
-	else if (commandInput.match(/^cd/)) {
+	else if (commandInput.toLowerCase().match(/^cd/)) {
 		if (currentFolder() == "/") {
 			if (commandInput in Folders_cd) {
 				changeFolder(Folders_cd[commandInput])
@@ -406,13 +406,13 @@ function validateCommand() {
 			}
 		}
 	}
-	else if (commandInput.match("\^bugtracker\$")) {
+	else if (commandInput.toLowerCase().match("\^safescan\$")) {
 		animateBugTracker();
 	}
 	else if (Users[commandInput]) {
 		changeUser(Users[commandInput]);
 	}
-	else if (commandInput.match("test")) {
+	else if (commandInput.toLowerCase().match("test")) {
 		animateSelfDestruct();
 	}
 	else {

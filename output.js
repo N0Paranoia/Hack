@@ -25,7 +25,8 @@ var start_proces = ["Setting&nbsp;preliminary&nbsp;keymap.&nbsp;&nbsp;&nbsp;&nbs
 
 var nodes_to_kill = ["is given the kill command!"," ","accessibility check...","OK","execute kill command..."," ","checking status"," ","status is...","TERMINATED"];
 
-var bug_tracker = ["starting bug tracking sequence","updating bug library","searching",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".","."];
+var bug_tracker = ["Safescan is starting a systemm wide scan","updating library","scanning system",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".","Number of viruses found: 0","Number of mallware threats found: 0","Number of bugs found: 1","Bugname: €@$t3r_€99","Threat level: 1 (Verry Low)","Placing bug in quarantine","Opening quarantine vault"];
+
 
 var dnsnames = ["localhost", "dw-vpnproxy.nl-ox.net","tor.secure-net.co.uk","\u5895\u7468-\u4E2D\u4320.\u6381\u1153\u56FD.\u4E2D","public-ix-net.bl-ix.net"];
 var ipnummer = ["127.0.0.1", "108.170.242.123", "216.239.42.115", "214.170.236.19", "63.251.163.200"];
@@ -96,9 +97,9 @@ function output(input, folder) {
  						date .......................... print the system date and time<br>\
 						ping [remote host] ............ send ICMP ECHO_REQUEST to network hosts<br>\
 						traceroute [remote host]....... print the route packets take to package host<br>\
-						bugtracker .....................Search for bugs in host system<br>\
-						clear ......................... clear the sceen\
-						reboot......................... reboot the system\
+						safescan........................Search for viruses, mallware or bugs in host system<br>\
+						clear ......................... clear the sceen<br>\
+						reboot......................... reboot the system<br>\
  					";
 			break;
 		case "info bash":
@@ -119,7 +120,7 @@ function output(input, folder) {
 						of the shells that Bash has borrowed concepts from are the<br>\
 						Bourne Shell (`sh'), the Korn Shell(`ksh'), and the C-shell <br>\
                         (`csh' and its successor, `tcsh').\
-    				";
+					";
 			break;
 		case "ls":
 			switch (folder) {
