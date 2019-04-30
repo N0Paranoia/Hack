@@ -68,7 +68,7 @@ function animateStartup() {
 function animatePing() {
 	showHide('prompt', 'none');
 	var commandInput = document.getElementById("command").value;
-	var number = 0;;
+	var number = 0;
 	var interval = setInterval(function () {
 		if (number < 4) {
 			if (ipnummer.indexOf(commandInput.replace("ping ", "")) != -1) {
@@ -162,7 +162,7 @@ function animateKillNodes() {
 	var commandInput = document.getElementById("command").value;
 	var number = 0;
 	var number2 = 0;
-	var numberOfNodes = commandInput.split(" ")[1]
+	var numberOfNodes = commandInput.split(" ")[1];
 	var myFunction = function () {
 		if (number < numberOfNodes) {
 			if (number2 < nodes_to_kill.length) {
@@ -201,24 +201,51 @@ function animateKillNodes() {
 	setTimeout(myFunction, number);
 }
 
+function nodeKills() {
+	var nodesInput = document.getElementById("test").value;
+	window.alert(nodeInput);
+}
+
 function animateSelfDestruct() {
 	showHide('prompt', 'none');
 	var number = 0;
 	var number2 = 0;
+	var number3 = 0;
+	var number4 = 0;
 	var myFunction = function () {
 		if (number < randon_ascii1.length) {
 			$('#console').append(`<br>${randon_ascii1[number]}`);
 			window.scrollTo(1, document.body.scrollHeight);
 			setTimeout(myFunction, (100 - (number * 10)));
 			number++;
-		} else if (number2 < randon_ascii2.length) {
+		}
+		else if (number2 < randon_ascii2.length) {
 			$('#console').append(`<br>${randon_ascii2[number2]}`);
-			window.scrollTo(1, document.body.scrollHeight);
+			window.scrollTo(0, document.body.scrollHeight);
 			setTimeout(myFunction, 5000);
 			number2++;
 		}
+		else if (number3 < randon_ascii3.length) {
+			$('#console').append(`<br>${randon_ascii3[number3]}`);
+			window.scrollTo(0, document.body.scrollHeight);
+			setTimeout(myFunction, 1000);
+			number3++;
+		}
+		else if (number4 < randon_ascii4.length) {
+			$('#console').append(`<br>${randon_ascii4[number4]}`);
+			window.scrollTo(0, document.body.scrollHeight);
+			setTimeout(myFunction, 500);
+			number4++;
+		}
 		else {
-			showHide('prompt', 'block');
+			showHide('boot', 'none');
+			showHide('passinput', 'none');
+			showHide("username", "none");
+			showHide("lastpass", "none");
+			showHide("usr", "none");
+			showHide("pw", "none");
+			showHide("terminal", "none");
+			showHide('prompt', 'none');
 			getFocus();
 		}
 	}
@@ -241,6 +268,11 @@ function submit(id, event) {
 				break;
 			case command:
 				validateCommand();
+				id.value = "";
+				return false;
+				break;
+			case test:
+				nodeKills();
 				id.value = "";
 				return false;
 				break;
@@ -370,6 +402,10 @@ function validateCommand() {
 		else if (commandInput.match(/^killnodes.sh 4 (\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5])) (\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5])) (\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5])) (\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))$/)) {
 			previousInnerHTML = previousInnerHTML.concat("<br>starting killnodes.sh script");
 			animateKillNodes();
+		}
+		else if (commandInput.match(/^killnodes.sh test$/)) {
+			showHide('prompt', 'none');
+			previousInnerHTML = previousInnerHTML.concat('<br><input id="test" type="text" autocomplete="off" onBlur="getFocus()" onkeydown="submit(test, arguments[0] || window.event)" />');
 		}
 		else {
 			if (commandInput.split(" ").length > 1 && commandInput.split(" ")[1] != (commandInput.split(" ").length - 2)) {
