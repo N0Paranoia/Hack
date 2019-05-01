@@ -65,6 +65,54 @@ function animateStartup() {
 	setTimeout(myFunction, number);
 }
 
+function animateShutdown() {
+	showHide('prompt', 'none');
+	var number = 0;
+	var commandInput = document.getElementById("command").value;
+	if (commandInput == "shutdown") {
+		shutdown_proses.unshift("The system is going to shutdown NOW!");
+	}
+	else if (commandInput == "reboot") {
+		shutdown_proses.unshift("The system is going down for a reboot NOW!");
+	}
+	var myFunction = function () {
+		if (number < shutdown_proses.length) {
+			if (number == 0) {
+				$('#console').append(`<br>${shutdown_proses[number]}`);
+				window.scrollTo(1, document.body.scrollHeight);
+				setTimeout(myFunction, Math.floor((Math.random() * 2000) + 500));
+			}
+			else if (number % 2 != 0) {
+				$('#console').append(`<br>${shutdown_proses[number]}`);
+				window.scrollTo(1, document.body.scrollHeight);
+				setTimeout(myFunction, Math.floor((Math.random() * 2000) + 500));
+			} else {
+				$('#console').append(`${shutdown_proses[number]}`);
+				window.scrollTo(1, document.body.scrollHeight);
+				setTimeout(myFunction, 100);
+			}
+			number++;
+		}
+		else {
+			if (commandInput == "shutdown") {
+				showHide('boot', 'none');
+				showHide('passinput', 'none');
+				showHide("username", "none");
+				showHide("lastpass", "none");
+				showHide("usr", "none");
+				showHide("pw", "none");
+				showHide("terminal", "none");
+				showHide('prompt', 'none');
+				getFocus();
+			}
+			else if (commandInput == "reboot") {
+				location.reload();
+			}
+		}
+	}
+	setTimeout(myFunction, number);
+}
+
 function animatePing() {
 	showHide('prompt', 'none');
 	var commandInput = document.getElementById("command").value;
@@ -202,8 +250,29 @@ function animateKillNodes() {
 }
 
 function nodeKills() {
-	var nodesInput = document.getElementById("test").value;
-	window.alert(nodeInput);
+	showHide('prompt', 'none');
+	var number = 0;
+	var myFunction = function () {
+		if (number < 3)
+			if (number == 0) {
+				$('#console').append(`<br>Number of nodes: <input type='text'/>`);
+				getFocus();
+				window.scrollTo(1, document.body.scrollHeight);
+				setTimeout(myFunction, Math.floor((Math.random() * 1500) + 100));
+				number++;
+			}
+			else if (number ==1) {
+				$('#console').append(`<br>Ipnummer: <input type='text'/>`);
+				getFocus();
+				window.scrollTo(1, document.body.scrollHeight);
+				setTimeout(myFunction, Math.floor((Math.random() * 1500) + 100));
+				number++;
+			}
+		else {
+			showHide('prompt', 'block');
+		}
+	}
+	setTimeout(myFunction, number);
 }
 
 function animateSelfDestruct() {
@@ -354,6 +423,45 @@ function changeUser(newUser, div) {
 	document.getElementById(div).innerHTML = current_user;
 }
 
+function changeTheme() {
+	var themeInput = document.getElementById("command").value.split(" ")[1];
+	if (themeInput == 'retro') {
+		$('*').css({
+			'background-color': '#101100',
+			'color': '#EEAA00',
+			'text-shadow':'none',
+		});
+	}
+	else if (themeInput == 'hacker') {
+		$('*').css({
+			'background-color': '#001100',
+			'color': '#00EE00',
+			'text-shadow':'none'
+		});
+	}
+	else if (themeInput == 'pro') {
+		$('*').css({
+			'background-color': '#000000',
+			'color': '#F0F0F0',
+			'text-shadow':'none'
+		});
+	}
+	else if (themeInput == 'light') {
+		$('*').css({
+			'background-color': '#FFFFFF',
+			'color': '#000000',
+			'text-shadow':'none'
+		});
+	}
+	else if (themeInput == 'blurry') {
+		$('*').css({
+			'background-color': '#FFFFFF',
+			'color': 'transparent',
+			'text-shadow':'0 0 5px rgba(0,0,0,0.5)'
+		});
+	}
+}
+
 function validateCommand() {
 	var previousInnerHTML = new String();
 	var commandInput = document.getElementById("command").value;
@@ -404,8 +512,9 @@ function validateCommand() {
 			animateKillNodes();
 		}
 		else if (commandInput.match(/^killnodes.sh test$/)) {
-			showHide('prompt', 'none');
-			previousInnerHTML = previousInnerHTML.concat('<br><input id="test" type="text" autocomplete="off" onBlur="getFocus()" onkeydown="submit(test, arguments[0] || window.event)" />');
+			previousInnerHTML = previousInnerHTML.concat("<br>starting killnodes.sh script");
+			nodeKills();
+
 		}
 		else {
 			if (commandInput.split(" ").length > 1 && commandInput.split(" ")[1] != (commandInput.split(" ").length - 2)) {
@@ -448,8 +557,25 @@ function validateCommand() {
 	else if (Users[commandInput]) {
 		changeUser(Users[commandInput]);
 	}
-	else if (commandInput.toLowerCase().match("test")) {
+	else if (commandInput.toLowerCase().match(/^shutdown/)) {
+		animateShutdown();
+	}
+	else if (commandInput.toLowerCase().match(/^reboot/)) {
+		animateShutdown();
+	}
+	else if (commandInput.toLowerCase().match("\^test\$")) {
 		animateSelfDestruct();
+	}
+	else if (commandInput.toLowerCase().match(/^theme/)) {
+		if (commandInput.toLowerCase().match("\^theme hacker\$") || commandInput.toLowerCase().match("\^theme retro\$") || commandInput.toLowerCase().match("\^theme pro\$") || commandInput.toLowerCase().match("\^theme light\$") || commandInput.toLowerCase().match("\^theme blurry\$")) {
+			changeTheme();
+		}
+		else if (commandInput.split(" ").length > 1) {
+			previousInnerHTML = previousInnerHTML.concat(output("theme_wrong", currentFolder()));
+		}
+		else {
+			previousInnerHTML = previousInnerHTML.concat(output("theme", currentFolder()));
+		}
 	}
 	else {
 		previousInnerHTML = previousInnerHTML.concat(output(commandInput.toLowerCase(), currentFolder()));

@@ -1,11 +1,3 @@
-* 
-{
-  background-color: #001100;
-  font-family: Lucida Console, Monaco, monospace;
-  color: #00EE00;
-  font-size: 12px;
-}
-
 body 
 {
   background-color: #001100;
@@ -21,7 +13,7 @@ input, .input
   width: 100%;
   border: none;
   padding: 0px;
-  /* outline: none; */
+  outline: none;
   margin: 0px;
   font-family: Lucida Console, Monaco, monospace;
   color: #00EE00;

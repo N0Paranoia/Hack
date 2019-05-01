@@ -23,9 +23,18 @@ var start_proces = ["Setting&nbsp;preliminary&nbsp;keymap.&nbsp;&nbsp;&nbsp;&nbs
 	"[OK]", "Starting&nbsp;system&nbsp;logger.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
 	"[OK]"];
 
+var shutdown_proses = ["Stopping&nbsp;all&nbsp;interfaces...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;","[DONE]",
+"Shutting&nbsp;down...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;","[DONE]",
+"Saving&nbsp;system&nbsp;clock...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;","[DONE]",
+"Sending&nbsp;all&nbsp;processes&nbsp;the&nbsp;TERM&nbsp;signal...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;","[DONE]",
+"Sending&nbsp;all&nbsp;processes&nbsp;the&nbsp;KILL&nbsp;signal...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;","[DONE]",
+"Turning&nbsp;off&nbsp;swap...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;","[DONE]",
+"Unmounting&nbsp;file&nbsp;system...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;","[DONE]",
+"Unmounting&nbsp;root...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;","[DONE]"]
+
 var nodes_to_kill = ["is given the kill command!"," ","accessibility check...","OK","execute kill command..."," ","checking status"," ","status is...","TERMINATED"];
 
-var bug_tracker = ["Safescan is starting a systemm wide scan","updating library","scanning system",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".","Number of viruses found: 0","Number of mallware threats found: 0","Number of bugs found: 1","Bugname: €@$t3r_€99","Threat level: 1 (Verry Low)","Placing bug in quarantine","Opening quarantine vault"];
+var bug_tracker = ["Safescan is starting a systemm wide scan","updating library","scanning system",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".","Number of viruses found: 0","Number of malware threats found: 0","Number of bugs found: 1","Bugname: &#8364;@$t3r_&#8364;99","Threat level: 1 (Verry Low)","Placing bug in quarantine","Opening quarantine vault"];
 
 
 var dnsnames = ["localhost", "dw-vpnproxy.nl-ox.net","tor.secure-net.co.uk","\u5895\u7468-\u4E2D\u4320.\u6381\u1153\u56FD.\u4E2D","public-ix-net.bl-ix.net"];
@@ -77,12 +86,6 @@ function output(input, folder) {
 		case "date":
 			return "<br>" + new Date();
 			break;
-		case "exit":
-			location.reload();
-			break;
-		case "reboot":
-			location.reload();
-			break;
 		case "help":
 			return "\
     					<br>\
@@ -97,9 +100,11 @@ function output(input, folder) {
  						date .......................... print the system date and time<br>\
 						ping [remote host] ............ send ICMP ECHO_REQUEST to network hosts<br>\
 						traceroute [remote host]....... print the route packets take to package host<br>\
-						safescan........................Search for viruses, mallware or bugs in host system<br>\
+						safescan....................... Search for viruses, malware or bugs in host system<br>\
+						theme [theme name]............. Change console theme (options are 'pro', 'retro', 'hacker', 'light' and 'blurry')<br>\
 						clear ......................... clear the sceen<br>\
 						reboot......................... reboot the system<br>\
+						shutdown....................... shutdown the system<br>\
  					";
 			break;
 		case "info bash":
@@ -182,6 +187,17 @@ function output(input, folder) {
 			return "\
 					<br>\
 					Number of nodes not matching number of given ip adresses";
+			break;
+		case "theme":
+			return "\
+					<br>\
+					usage: theme [theme name]<br>\
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Optional themes are 'pro', 'retro' end 'hacker'";
+			break;
+		case "theme_wrong":
+			return "\
+					<br>\
+					Requested theme not known";
 			break;
 		case "clear":
 			return "screen cleared";
