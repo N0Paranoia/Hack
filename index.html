@@ -1,16 +1,48 @@
 <html>
 	<head>
-        <title>NoParanoia - Linux</title>
-      	<link type="text/css" href="terminal.css" rel="stylesheet" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+		<link type="text/css" href="terminal.css" rel="stylesheet" />
+		<script src="jquery-1.11.3.min.js" type="text/javascript"></script>
+		<script src="output.js" type="text/javascript"></script>
+		<script src="random_ascii.js" type="text/javascript"></script>
+		<script src="console.js" type="text/javascript"></script>
 	</head>
-	<body>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
-			<iframe SRC="console.html" WIDTH=100% HEIGHT=100%>
-
-				If you can see this, your browser doesn't 
-				understand IFRAME.  However, we'll still 
-			<A HREF="console.html">link</A> 
-				you to the file.
-			</iframe>
+	<body onload="onLoad()">
+		<div class="boot" id="boot">
+			Starting NoParanoia-Linux...
+		</div>
+		<div class="input" id="usr">
+			<div id="user">
+				<!-- for the previous commands -->
+			</div>
+			<div class="input" id="userinput">
+				login as:
+				<input id="username" type="text" autocomplete="off" onBlur="getFocus()" onkeydown="submit(username, arguments[0] || window.event)" />
+				<input id="cancel_autocomplete_usr" type="text" style="display:none" />
+			</div>
+		</div>
+		<div class="input" id="pw">
+			<div class="input" id="pass">
+				login as: <span id="PassCurrentUser"><script>document.write(currentUser());</script></span> </br>
+			</div>
+			<div class="input" id="passinput">
+				<span id="PassInputCurrentUser"><script>document.write(currentUser());</script></span>@GC846C0's password: 
+				<input id="password" type="password" autocomplete="off" onBlur="getFocus()" onkeydown="submit(password, arguments[0] || window.event)" />
+				<input id="cancel_autocomplete_pw" type="text" style="display:none" />
+			</div>
+		</div>
+		<div class="input" id="terminal">
+			<div class= "input" id="lastpass">
+				<span id="TerminalCurrentUser"><script>document.write(currentUser());</script></span>@GC846C0's password:
+			</div>
+			<div class="input" id="console">
+				login succesful</br>
+				Last login:<span class="date" id='Date'><script>document.write(new Date(Date.now() - (((1000 * 60) *60)/*hour*/ * 22) - ((1000 * 60)/*minutes*/ * 37)).toString())</script></span> from 127.0.0.1
+			</div>
+			<div class="input" id="prompt">
+				[<span id="PromptCurrentUser"><script>document.write(currentUser());</script></span>@GC846C0 <span id="CurrentFolder"><script>document.write(currentFolder());</script></span>]<span id="currentUserPrompt"><script>document.write(currentPrompt());</script></span>
+				<input id="command" type="text" autocomplete="off" onBlur="getFocus()" onkeydown="submit(command, arguments[0] || window.event)" />
+			</div>
+		</div>	
 	</body>
-</html
+</html>

@@ -70,7 +70,7 @@ var Folders = {
 
 var Users = [];
 var userList = ["guest", "root", "N0S!gn@l"]
-var passList = ["welkom", "welkom", "password"]
+var passList = ["", "welkom", "password"]
 var user00 = "guest";
 var user01 = "root";
 var user02 = "N0S!gn@l";
@@ -83,6 +83,9 @@ var current_user = "guest";
 
 function output(input, folder) {
 	switch (input) {
+		case "version":
+			return "<br>Version 0.8.0";
+			break;
 		case "date":
 			return "<br>" + new Date();
 			break;
@@ -104,7 +107,7 @@ function output(input, folder) {
 						theme [theme name]............. Change console theme (options are 'pro', 'retro', 'hacker', 'light' and 'blurry')<br>\
 						clear ......................... clear the sceen<br>\
 						reboot......................... reboot the system<br>\
-						shutdown....................... shutdown the system<br>\
+						shutdown....................... shutdown the system\
  					";
 			break;
 		case "info bash":
