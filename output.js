@@ -92,22 +92,24 @@ function output(input, folder) {
 		case "help":
 			return "\
     					<br>\
-						GNU bash, version 4.2-release (build: GC846C0) (i586-NoParanoia-linux version 42<br>\
- 						shell). These shell commands are defined internally.  Type \`help\'<br>\
-                        to see this list. Use \`info bash\' to find out more about the<br>\
-                        shell in general.<br>\
+						GNU bash, version 4.2-release (build: GC846C0)<br>\
+						(i586-NoParanoia-linux version 42 shell).<br>\
+						These shell commands are defined internally.  Type \`help\'<br>\
+                        to see this list. Use \`info bash\' to find out more about<br>\
+						the shell in general.<br>\
  						<br>\
-						cd [directory] ................ cd change the working directory<br>\
-						cat [OPTION] [FILE] ........... concatenate files and print on the standard output<br>\
-						ls [OPTION] [FILE] ............ list directory contents<br>\
- 						date .......................... print the system date and time<br>\
-						ping [remote host] ............ send ICMP ECHO_REQUEST to network hosts<br>\
-						traceroute [remote host]....... print the route packets take to package host<br>\
-						safescan....................... Search for viruses, malware or bugs in host system<br>\
-						theme [theme name]............. Change console theme (options are 'pro', 'retro', 'hacker', 'light' and 'blurry')<br>\
-						clear ......................... clear the sceen<br>\
-						reboot......................... reboot the system<br>\
-						shutdown....................... shutdown the system\
+						cd [directory] ............ cd change the working directory<br>\
+						cat [OPTION] [FILE] ....... print content of file to screen<br>\
+						ls [OPTION] [FILE] ........ list directory contents<br>\
+ 						date ...................... print the system date and time<br>\
+						ping [remote host] ........ send ICMP ECHO_REQUEST<br>\
+						traceroute [remote host]... print the route packets to host<br>\
+						safescan................... Scan for system threats<br>\
+						theme [theme name]......... Change theme<br>\
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(pro,retro,hacker,light,blurry)<br>\
+						clear ..................... clear the sceen<br>\
+						reboot..................... reboot the system<br>\
+						shutdown................... shutdown the system\
  					";
 			break;
 		case "info bash":

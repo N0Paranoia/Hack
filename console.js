@@ -15,6 +15,7 @@ function checkForMobile() {
 
 function onLoad() {
 	// alert(checkForMobile());
+	alert(json.test)
 	if (!debug) {
 		animateStartup();
 		showHide("usr", "none");
